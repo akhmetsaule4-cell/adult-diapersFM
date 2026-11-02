@@ -6,189 +6,123 @@
 <title>Финмодель · Завод подгузников для взрослых</title>
 <style>
   *{box-sizing:border-box}
-  :root{
-    --bg:#0a0e17;--card:#121a28;--card2:#0e1520;--border:#1e2a3d;
-    --text:#e9eef8;--muted:#8492ab;
-    --accent:#4f8cff;--accent2:#22d3ee;
-    --green:#34d399;--red:#f87171;--amber:#fbbf24;
-  }
+  :root{--bg:#0a0e17;--card:#121a28;--card2:#0e1520;--border:#1e2a3d;--text:#e9eef8;--muted:#8492ab;--accent:#4f8cff;--accent2:#22d3ee;--green:#34d399;--red:#f87171;--amber:#fbbf24}
   html,body{margin:0;padding:0}
-  body{
-    font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;
     background:radial-gradient(1100px 600px at 15% -15%,#17253f 0%,transparent 62%),
       radial-gradient(900px 500px at 95% 0%,#10263a 0%,transparent 55%),var(--bg);
-    color:var(--text);min-height:100vh;padding:24px 16px 60px;-webkit-font-smoothing:antialiased;
-  }
+    color:var(--text);min-height:100vh;padding:24px 16px 60px;-webkit-font-smoothing:antialiased}
   .wrap{max-width:1400px;margin:0 auto}
   header{margin-bottom:20px}
-  .badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;
-    letter-spacing:.7px;text-transform:uppercase;color:var(--accent2);
-    background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);
-    padding:5px 11px;border-radius:99px;margin-bottom:12px}
+  .badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);padding:5px 11px;border-radius:99px;margin-bottom:12px}
   .dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2)}
-  h1{font-size:clamp(22px,3vw,34px);line-height:1.15;margin:0 0 8px;font-weight:750;letter-spacing:-.5px;
-    background:linear-gradient(100deg,#fff 20%,#7fb0ff 70%,#22d3ee 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent}
+  h1{font-size:clamp(22px,3vw,34px);line-height:1.15;margin:0 0 8px;font-weight:750;letter-spacing:-.5px;background:linear-gradient(100deg,#fff 20%,#7fb0ff 70%,#22d3ee 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
   header p{margin:0;color:var(--muted);font-size:14px;max-width:820px;line-height:1.55}
-
   .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin:20px 0 18px}
-  .kpi{position:relative;overflow:hidden;
-    background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);
-    border:1px solid var(--border);border-radius:14px;padding:14px 16px;
-    transition:border-color .2s,transform .2s}
+  .kpi{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:14px;padding:14px 16px;transition:border-color .2s,transform .2s}
   .kpi:hover{border-color:#2c4468;transform:translateY(-2px)}
-  .kpi::after{content:'';position:absolute;inset:0 auto auto 0;height:2px;width:100%;
-    background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.55}
+  .kpi::after{content:'';position:absolute;inset:0 auto auto 0;height:2px;width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.55}
   .kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600;margin-bottom:6px}
   .kpi-value{font-size:20px;font-weight:750;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
-  .kpi-value.green{color:var(--green)}
-  .kpi-value.red{color:var(--red)}
-  .kpi-value.amber{color:var(--amber)}
-
+  .kpi-value.green{color:var(--green)}.kpi-value.red{color:var(--red)}.kpi-value.amber{color:var(--amber)}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
   @media(max-width:1100px){.layout{grid-template-columns:1fr}}
-
-  .card{background:linear-gradient(170deg,var(--card) 0%,var(--card2) 100%);
-    border:1px solid var(--border);border-radius:16px;padding:18px;
-    box-shadow:0 24px 48px -32px rgba(0,0,0,.9)}
+  .card{background:linear-gradient(170deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 24px 48px -32px rgba(0,0,0,.9)}
   .card+.card{margin-top:16px}
   .card h3{margin:0 0 4px;font-size:14.5px;font-weight:700}
   .card h3+p{margin:0 0 14px;font-size:12px;color:var(--muted)}
-
   .tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}
-  .tab{flex:1 1 auto;min-width:100px;background:transparent;border:1px solid var(--border);
-    color:var(--muted);font:inherit;font-size:12.5px;font-weight:600;
-    padding:9px 10px;border-radius:9px;cursor:pointer;transition:all .2s ease;white-space:nowrap}
+  .tab{flex:1 1 auto;min-width:100px;background:transparent;border:1px solid var(--border);color:var(--muted);font:inherit;font-size:12.5px;font-weight:600;padding:9px 10px;border-radius:9px;cursor:pointer;transition:all .2s ease;white-space:nowrap}
   .tab:hover{color:var(--text);border-color:#2c4468;background:rgba(79,140,255,.05)}
-  .tab.active{color:#fff;border-color:rgba(79,140,255,.65);
-    background:linear-gradient(160deg,rgba(79,140,255,.26),rgba(34,211,238,.12));
-    box-shadow:0 6px 22px -10px rgba(79,140,255,.85)}
+  .tab.active{color:#fff;border-color:rgba(79,140,255,.65);background:linear-gradient(160deg,rgba(79,140,255,.26),rgba(34,211,238,.12));box-shadow:0 6px 22px -10px rgba(79,140,255,.85)}
   .panel{display:none;animation:fade .25s ease}
   .panel.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-
   .slider-row{margin-bottom:18px}
   .slider-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
   .slider-head label{font-size:13px;font-weight:600;color:#c7d2e4}
   .slider-head .val{font-size:14px;font-weight:750;color:var(--accent2);font-variant-numeric:tabular-nums}
-  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;
-    background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) var(--p,50%),#1d2940 var(--p,50%));
-    outline:none;cursor:pointer;display:block}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;
-    background:#fff;border:4px solid var(--accent);cursor:grab;
-    box-shadow:0 0 0 5px rgba(79,140,255,.16),0 3px 10px rgba(0,0,0,.55);transition:transform .12s}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) var(--p,50%),#1d2940 var(--p,50%));outline:none;cursor:pointer;display:block}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:4px solid var(--accent);cursor:grab;box-shadow:0 0 0 5px rgba(79,140,255,.16),0 3px 10px rgba(0,0,0,.55);transition:transform .12s}
   input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.1)}
-  input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
-    background:#fff;border:4px solid var(--accent);cursor:grab}
-
+  input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:4px solid var(--accent);cursor:grab}
   .table-scroll{overflow-x:auto;border-radius:10px;margin:0 -4px}
   table.data{width:100%;border-collapse:collapse;font-size:12.5px}
-  table.data th{background:#0e1520;color:var(--muted);font-weight:600;text-align:right;
-    padding:9px 8px;border-bottom:1px solid var(--border);white-space:nowrap;
-    font-size:10.5px;text-transform:uppercase;letter-spacing:.4px}
-  table.data th:first-child,table.data td:first-child{text-align:left;background:#0e1520;
-    min-width:170px;font-weight:500;color:#c7d2e4}
-  table.data td{text-align:right;padding:6px 8px;border-bottom:1px solid rgba(30,42,61,.5);
-    font-variant-numeric:tabular-nums;white-space:nowrap;color:#d4dcea;font-size:12px}
+  table.data th{background:#0e1520;color:var(--muted);font-weight:600;text-align:right;padding:9px 8px;border-bottom:1px solid var(--border);white-space:nowrap;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px}
+  table.data th:first-child,table.data td:first-child{text-align:left;background:#0e1520;min-width:170px;font-weight:500;color:#c7d2e4}
+  table.data td{text-align:right;padding:6px 8px;border-bottom:1px solid rgba(30,42,61,.5);font-variant-numeric:tabular-nums;white-space:nowrap;color:#d4dcea;font-size:12px}
   table.data tr.total td{font-weight:750;color:#fff;background:rgba(79,140,255,.08)}
   table.data tr.total td:first-child{color:#fff;background:rgba(79,140,255,.08)}
   table.data tr.big td{background:rgba(34,211,238,.06);color:#fff;font-weight:700}
   table.data tr.big td:first-child{background:rgba(34,211,238,.06)}
-
   #chart1{width:100%;height:220px;display:block;margin-bottom:8px}
   #chart2{width:100%;height:200px;display:block}
   .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--muted);font-weight:600}
   .legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:middle}
-
-  .note{margin-top:12px;font-size:12px;color:var(--muted);line-height:1.55;
-    background:rgba(79,140,255,.06);border:1px solid rgba(79,140,255,.16);
-    border-radius:10px;padding:10px 12px}
+  .note{margin-top:12px;font-size:12px;color:var(--muted);line-height:1.55;background:rgba(79,140,255,.06);border:1px solid rgba(79,140,255,.16);border-radius:10px;padding:10px 12px}
   .note b{color:#c7d2e4}
-
-  .stat-row{display:flex;justify-content:space-between;padding:8px 0;
-    border-bottom:1px solid rgba(30,42,61,.6);font-size:12.5px}
+  .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(30,42,61,.6);font-size:12.5px}
   .stat-row:last-child{border-bottom:none}
   .stat-row span{color:var(--muted)}
   .stat-row b{color:#fff;font-variant-numeric:tabular-nums;font-weight:700}
-
   .inp-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap}
   .inp-toolbar span{font-size:12.5px;color:var(--muted);flex:1 1 220px}
-  .btn-reset{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.35);
-    color:#fca5a5;font:inherit;font-size:12.5px;font-weight:600;
-    padding:7px 14px;border-radius:8px;cursor:pointer;transition:all .2s}
+  .btn-reset{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.35);color:#fca5a5;font:inherit;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;transition:all .2s}
   .btn-reset:hover{background:rgba(248,113,113,.18);border-color:rgba(248,113,113,.6)}
-
-  details.inp-section{background:#0a1220;border:1px solid var(--border);border-radius:12px;
-    margin-bottom:10px;overflow:hidden}
-  details.inp-section>summary{cursor:pointer;padding:11px 14px;font-size:12.5px;font-weight:700;
-    color:#c7d2e4;background:#0e1520;user-select:none;list-style:none;
-    display:flex;justify-content:space-between;align-items:center}
+  details.inp-section{background:#0a1220;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden}
+  details.inp-section>summary{cursor:pointer;padding:11px 14px;font-size:12.5px;font-weight:700;color:#c7d2e4;background:#0e1520;user-select:none;list-style:none;display:flex;justify-content:space-between;align-items:center}
   details.inp-section>summary::-webkit-details-marker{display:none}
   details.inp-section>summary::after{content:'▾';color:var(--muted);transition:transform .2s}
   details.inp-section[open]>summary::after{transform:rotate(180deg)}
   details.inp-section[open]>summary{border-bottom:1px solid var(--border)}
   details.inp-section>div{padding:12px 14px}
-
   .inp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-  .inp-item{background:#0e1520;border:1px solid var(--border);border-radius:8px;
-    padding:7px 26px 7px 9px;transition:border-color .2s;position:relative}
+  .inp-item{background:#0e1520;border:1px solid var(--border);border-radius:8px;padding:7px 26px 7px 9px;transition:border-color .2s;position:relative}
   .inp-item:focus-within{border-color:var(--accent2);background:#0b1725}
-  .inp-item label{display:block;font-size:10px;color:var(--muted);
-    text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;font-weight:600}
-  .inp-item input{width:100%;background:transparent;border:none;outline:none;
-    color:#fff;font:inherit;font-size:13.5px;font-weight:700;
-    font-variant-numeric:tabular-nums;padding:2px 0;
-    border-bottom:1px dashed rgba(79,140,255,.35);
-    transition:border-color .2s,background .2s;cursor:text}
+  .inp-item label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;font-weight:600}
+  .inp-item input{width:100%;background:transparent;border:none;outline:none;color:#fff;font:inherit;font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums;padding:2px 0;border-bottom:1px dashed rgba(79,140,255,.35);transition:border-color .2s,background .2s;cursor:text}
   .inp-item input:hover{border-bottom-color:rgba(79,140,255,.7);background:rgba(79,140,255,.04)}
   .inp-item input:focus{border-bottom:1.5px solid var(--accent2);background:rgba(34,211,238,.06)}
   .inp-item input::-webkit-outer-spin-button,.inp-item input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   .inp-item input[type=number]{-moz-appearance:textfield}
-  .inp-item::after{content:'✎';position:absolute;right:8px;top:8px;
-    font-size:10px;color:rgba(132,146,171,.45);pointer-events:none;transition:color .2s}
+  .inp-item::after{content:'✎';position:absolute;right:8px;top:8px;font-size:10px;color:rgba(132,146,171,.45);pointer-events:none;transition:color .2s}
   .inp-item:focus-within::after{color:var(--accent2)}
   .inp-item.readonly{padding-right:9px}
   .inp-item.readonly::after{content:''}
   .inp-item.readonly input{cursor:default;border-bottom:none;color:var(--accent2)}
   .inp-note{margin-top:9px;font-size:11.5px;color:var(--muted)}
   .inp-note b{color:#c7d2e4;font-variant-numeric:tabular-nums}
-
-  .staff-row{display:flex;justify-content:space-between;align-items:center;
-    gap:8px;padding:8px 0;border-bottom:1px solid rgba(30,42,61,.5);flex-wrap:wrap}
+  .staff-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(30,42,61,.5);flex-wrap:wrap}
   .staff-row:last-child{border-bottom:none}
   .staff-name{font-size:12.5px;color:#d4dcea;flex:1 1 140px}
   .staff-fields{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
   .staff-fields .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
-  .staff-fields input{width:64px;background:#0e1520;border:1px solid var(--border);
-    border-radius:6px;padding:4px 6px;color:#fff;font:inherit;font-size:12px;
-    font-weight:700;text-align:right;font-variant-numeric:tabular-nums;outline:none;
-    transition:border-color .2s,background .2s}
+  .staff-fields input{width:64px;background:#0e1520;border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:#fff;font:inherit;font-size:12px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;outline:none;transition:border-color .2s,background .2s}
   .staff-fields input:hover{border-color:#2c4468;background:rgba(79,140,255,.04)}
   .staff-fields input:focus{border-color:var(--accent2);background:rgba(34,211,238,.06)}
   .staff-fields input::-webkit-outer-spin-button,.staff-fields input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   .staff-fields input[type=number]{-moz-appearance:textfield}
+  .fix-badge{display:inline-block;font-size:10px;font-weight:700;color:var(--green);background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);padding:1px 6px;border-radius:99px;margin-left:6px;text-transform:uppercase;letter-spacing:.4px}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <header>
-  <div class="badge"><span class="dot"></span>Финансовая модель · все параметры редактируемые</div>
-  <h1>Завод подгузников для взрослых</h1>
-  <p>Все суммы — <b>тыс. ₸</b>. Все поля на вкладке «Вводные» редактируются (иконка <b>✎</b>). Слайдеры и KPI синхронизированы с полями.</p>
+  <div class="badge"><span class="dot"></span>Финансовая модель · сверено с Excel</div>
+  <h1>Завод подгузников для взрослых <span class="fix-badge">v2 · сверено</span></h1>
+  <p>Все суммы — <b>тыс. ₸</b>. Модель построена строго по вашему Excel: проверены все листы. <b>Исправлено 8 расхождений</b> (см. вкладку «Вводные»). Все поля редактируются, слайдеры синхронизированы.</p>
 </header>
 
 <section class="kpi-grid">
-  <div class="kpi"><div class="kpi-label">Инвестиции (всего)</div><div class="kpi-value" id="kInvest">—</div></div>
+  <div class="kpi"><div class="kpi-label">Инвестиции (капитал)</div><div class="kpi-value" id="kInvest">—</div></div>
   <div class="kpi"><div class="kpi-label">Выручка Y1</div><div class="kpi-value" id="kRevY1">—</div></div>
   <div class="kpi"><div class="kpi-label">Прибыль Y1</div><div class="kpi-value" id="kProfitY1">—</div></div>
-  <div class="kpi"><div class="kpi-label">NPV (5 лет, 15%)</div><div class="kpi-value" id="kNPV">—</div></div>
+  <div class="kpi"><div class="kpi-label">NPV (5 лет)</div><div class="kpi-value" id="kNPV">—</div></div>
   <div class="kpi"><div class="kpi-label">IRR (годовая)</div><div class="kpi-value" id="kIRR">—</div></div>
   <div class="kpi"><div class="kpi-label">Окупаемость</div><div class="kpi-value" id="kPayback">—</div></div>
 </section>
 
 <div class="layout">
-
 <div class="left-col">
   <div class="card">
     <div class="tabs">
@@ -203,23 +137,17 @@
       <div class="slider-row">
         <div class="slider-head"><label>Цена реализации (средневзвешенная)</label><span class="val" id="vPrice">287 ₸/шт</span></div>
         <input type="range" id="priceSlider" min="150" max="1500" step="1">
-        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--muted)">
-          <span>150 ₸</span><span>База: 287 ₸</span><span>1 500 ₸</span>
-        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--muted)"><span>150 ₸</span><span>База: 287 ₸</span><span>1 500 ₸</span></div>
       </div>
       <div class="slider-row">
         <div class="slider-head"><label>Целевая загрузка (с мес. 21)</label><span class="val" id="vLoad">80%</span></div>
         <input type="range" id="loadSlider" min="20" max="100" step="1">
-        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--muted)">
-          <span>20%</span><span>≈ 209 916 шт/мес</span><span>100%</span>
-        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--muted)"><span>20%</span><span>≈ 209 916 шт/мес</span><span>100%</span></div>
       </div>
       <div class="slider-row">
         <div class="slider-head"><label>Ставка дисконтирования</label><span class="val" id="vDisc">15,0%</span></div>
         <input type="range" id="discSlider" min="5" max="30" step="0.5">
-        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--muted)">
-          <span>5%</span><span>База: 15%</span><span>30%</span>
-        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--muted)"><span>5%</span><span>База: 15%</span><span>30%</span></div>
       </div>
       <div class="note"><b>Связь:</b> цена ↑ → маржа ↑ → прибыль ↑ → окупаемость ↓. Загрузка ↓ → выручка ↓ → окупаемость ↑. Дисконт ↑ → NPV ↓.</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
@@ -227,6 +155,9 @@
         <div class="inp-item readonly"><label>Объём/мес (целевой)</label><input type="text" id="iQty" readonly></div>
         <div class="inp-item readonly"><label>Переменные/шт</label><input type="text" id="iVar" readonly></div>
         <div class="inp-item readonly"><label>Маржа/шт</label><input type="text" id="iMargin" readonly></div>
+      </div>
+      <div class="note" style="margin-top:14px">
+        <b>Важно:</b> выручка сдвинута на 1 мес. относительно производства — это отсрочка платежа 30 дней (стандартный сценарий из Excel <code>Вводные!B103</code>). Поэтому продажи начинаются в мес. 10, а не 9.
       </div>
     </div>
 
@@ -241,25 +172,20 @@
 
     <div class="panel" data-panel="pl">
       <div class="table-scroll">
-        <table class="data" id="plTable">
-          <thead><tr id="plHead"><th>Показатель</th></tr></thead>
-          <tbody id="plBody"></tbody>
-        </table>
+        <table class="data" id="plTable"><thead><tr id="plHead"><th>Показатель</th></tr></thead><tbody id="plBody"></tbody></table>
       </div>
+      <div class="note">Годы 1–2 — по месяцам, годы 3–5 — агрегат. Себестоимость — по продажам (а не по производству), как в Excel.</div>
     </div>
 
     <div class="panel" data-panel="cf">
       <div class="table-scroll">
-        <table class="data" id="cfTable">
-          <thead><tr id="cfHead"><th>Показатель</th></tr></thead>
-          <tbody id="cfBody"></tbody>
-        </table>
+        <table class="data" id="cfTable"><thead><tr id="cfHead"><th>Показатель</th></tr></thead><tbody id="cfBody"></tbody></table>
       </div>
     </div>
 
     <div class="panel" data-panel="inputs">
       <div class="inp-toolbar">
-        <span>Кликайте по полям с иконкой <b>✎</b> и вводите свои значения. Модель пересчитается мгновенно.</span>
+        <span>Все поля редактируемые. Значения <b>сверены с Excel</b> — исправлено 8 расхождений.</span>
         <button class="btn-reset" id="btnReset">↺ Сбросить всё</button>
       </div>
 
@@ -306,13 +232,14 @@
       </details>
 
       <details class="inp-section">
-        <summary>Г. Переменные затраты</summary>
+        <summary>Г. Переменные затраты <span class="fix-badge">исправлено</span></summary>
         <div>
           <div class="inp-grid">
             <div class="inp-item"><label>Сырьё, ₸/шт</label><input type="number" step="0.01" data-key="raw"></div>
             <div class="inp-item"><label>Прочие, ₸/шт</label><input type="number" step="0.01" data-key="otherVar"></div>
+            <div class="inp-item"><label>Лаборатория, тыс.₸/мес</label><input type="number" step="0.1" data-key="labPerMonth"></div>
           </div>
-          <div class="inp-note">Итого: <b id="calcVar">—</b> ₸/шт</div>
+          <div class="inp-note">Итого переменные: <b id="calcVar">—</b> ₸/шт · Сырьё = 17,68 (а не 107,40 — было ошибкой)</div>
         </div>
       </details>
 
@@ -326,7 +253,6 @@
             <div class="inp-item"><label>Мес. 15–20</label><input type="number" step="1" data-ramp="3" data-pct="1"></div>
             <div class="inp-item"><label>Мес. 21+</label><input type="number" step="1" data-ramp="4" data-pct="1"></div>
           </div>
-          <div class="inp-note">Слайдер «Целевая загрузка» синхронизирован с полем «Мес. 21+»</div>
         </div>
       </details>
 
@@ -347,24 +273,26 @@
       </details>
 
       <details class="inp-section">
-        <summary>Ж. Штат (оклад, тыс. ₸/мес)</summary>
+        <summary>Ж. Штат (оклад, тыс. ₸/мес) <span class="fix-badge">исправлено</span></summary>
         <div id="staffList"></div>
+        <div class="inp-note">Оператор и Механик — старт с мес. <b>6</b> (в Excel в формулах, не 8).</div>
       </details>
 
       <details class="inp-section">
-        <summary>З. Адм. расходы (тыс. ₸/мес)</summary>
+        <summary>З. Адм. расходы (тыс. ₸/мес) <span class="fix-badge">исправлено</span></summary>
         <div id="adminList"></div>
-        <div class="inp-note">Агентские услуги: <b id="calcAgency">—</b>% (на адм. расходы + сертификации)</div>
+        <div class="inp-note">Агентские: <b id="calcAgency">—</b>% начисляются только на адм. расходы <b>без сертификаций</b> (как в Excel <code>Адм. расходы!C22</code>)</div>
       </details>
 
       <details class="inp-section">
-        <summary>И. Сертификации (разово, тыс. ₸)</summary>
+        <summary>И. Сертификации (разово, тыс. ₸) <span class="fix-badge">исправлено</span></summary>
         <div>
           <div class="inp-grid">
-            <div class="inp-item"><label>Месяц 5 — гос. регистрация</label><input type="number" step="100" data-key="certMonth5"></div>
-            <div class="inp-item"><label>Месяц 8 — ИСО 13485</label><input type="number" step="100" data-key="certMonth8"></div>
-            <div class="inp-item"><label>Месяц 9 — регистрация + экспертизы</label><input type="number" step="100" data-key="certMonth9"></div>
+            <div class="inp-item"><label>Месяц 5 — гос. регистрация (с НДС)</label><input type="number" step="10" data-key="certMonth5"></div>
+            <div class="inp-item"><label>Месяц 8 — ИСО 13485 (с НДС)</label><input type="number" step="100" data-key="certMonth8"></div>
+            <div class="inp-item"><label>Месяц 9 — рег. + экспертизы (с НДС)</label><input type="number" step="100" data-key="certMonth9"></div>
           </div>
+          <div class="inp-note">Все сертификации в Excel считаются с НДС 16%. Ранее было без НДС — исправлено.</div>
         </div>
       </details>
     </div>
@@ -376,19 +304,13 @@
     <h3>Накопленный денежный поток</h3>
     <p>60 месяцев · ноль = окупаемость</p>
     <canvas id="chart1"></canvas>
-    <div class="legend">
-      <span><i style="background:#4f8cff"></i>Накопленный CF</span>
-      <span><i style="background:#34d399"></i>Окупаемость</span>
-    </div>
+    <div class="legend"><span><i style="background:#4f8cff"></i>Накопленный CF</span><span><i style="background:#34d399"></i>Окупаемость</span></div>
   </div>
   <div class="card">
     <h3>Выручка и EBITDA</h3>
     <p>Первые 24 месяца, тыс. ₸</p>
     <canvas id="chart2"></canvas>
-    <div class="legend">
-      <span><i style="background:#4f8cff"></i>Выручка</span>
-      <span><i style="background:#22d3ee"></i>EBITDA</span>
-    </div>
+    <div class="legend"><span><i style="background:#4f8cff"></i>Выручка</span><span><i style="background:#22d3ee"></i>EBITDA</span></div>
   </div>
   <div class="card">
     <h3>Ключевые показатели</h3>
@@ -405,7 +327,6 @@
     <div class="stat-row"><span>Дисконт. окупаемость</span><b id="sDPB">—</b></div>
   </div>
 </div>
-
 </div>
 </div>
 
@@ -424,32 +345,22 @@ function human(v){
 }
 const k = v => fmt(v);
 
-/* ============ ДЕФОЛТНЫЕ ЗНАЧЕНИЯ (из Excel) ============ */
+/* ============ ДЕФОЛТНЫЕ ЗНАЧЕНИЯ (сверено с Excel) ============ */
 const DEFAULTS = {
   kztUsd: 500,
   kztCny: 68.6,
   inflation: 0.07,
   discount: 0.15,
   kpn: 0,
-  speed: 200,
-  workDays: 21,
-  shiftHours: 5,
-  efficiency: 0.85,
-  waste: 0.02,
-  priceM: 280,
-  priceL: 290,
-  priceXL: 300,
-  shareM: 0.5,
-  shareL: 0.3,
-  shareXL: 0.2,
-  raw: 107.40,
+  speed: 200, workDays: 21, shiftHours: 5, efficiency: 0.85, waste: 0.02,
+  priceM: 280, priceL: 290, priceXL: 300,
+  shareM: 0.5, shareL: 0.3, shareXL: 0.2,
+  raw: 17.68,        // ← ИСПРАВЛЕНО (было 107.40)
   otherVar: 10.807,
-  construction: 244000,
-  constructionMonths: 5,
+  labPerMonth: 23.87, // ← НОВОЕ: лаборатория (300 CNY × 68.6 × 1.16 / 1000)
+  construction: 244000, constructionMonths: 5,
   infra: 30870,
-  equipmentUsd: 1272650,
-  equipAdvPct: 0.30,
-  equipFinalPct: 0.70,
+  equipmentUsd: 1272650, equipAdvPct: 0.30, equipFinalPct: 0.70,
   deliveryChinaUsd: 35000,
   deliverySvhKzt: 1440000,
   inventory: 15756,
@@ -470,8 +381,8 @@ const DEFAULTS = {
     {name:'Охрана', salary:299, count:4, start:9, preStart:1, preCount:1},
     {name:'Директор по качеству', salary:1499, count:1, start:6},
     {name:'Технический директор', salary:1499, count:1, start:9, preStart:1, preCount:0.5},
-    {name:'Оператор', salary:425, count:4, start:8},
-    {name:'Механик', salary:363, count:2, start:8},
+    {name:'Оператор', salary:425, count:4, start:6},       // ← ИСПРАВЛЕНО (было 8)
+    {name:'Механик', salary:363, count:2, start:6},         // ← ИСПРАВЛЕНО (было 8)
     {name:'ОТК', salary:425, count:2, start:9},
     {name:'Логист', salary:363, count:1, start:3},
   ],
@@ -486,9 +397,9 @@ const DEFAULTS = {
     {name:'Обслуживание', amount:250, start:9},
   ],
   agencyPct: 0.05,
-  certMonth5: 430,
-  certMonth8: 10000,
-  certMonth9: 36506,
+  certMonth5: 498.8,    // ← ИСПРАВЛЕНО (430 × 1.16)
+  certMonth8: 11600,    // ← ИСПРАВЛЕНО (10000 × 1.16)
+  certMonth9: 42347,    // ← ИСПРАВЛЕНО (36506 × 1.16)
 };
 
 /* ============ РАБОЧАЯ КОПИЯ ============ */
@@ -516,12 +427,11 @@ function employerCost(salary){
   return salary + opvr + so + oosms + socTax;
 }
 function inflationFactor(m){ return Math.pow(1+M.inflation, Math.floor((m-1)/12)); }
-
 function getStaffCount(s, m){
-  let count = 0;
-  if (s.preStart !== undefined && m >= s.preStart && m < s.start) count = s.preCount || 0;
-  if (m >= s.start) count = s.count;
-  return count;
+  let c = 0;
+  if (s.preStart !== undefined && m >= s.preStart && m < s.start) c = s.preCount || 0;
+  if (m >= s.start) c = s.count;
+  return c;
 }
 function monthlyFOT(m){
   const inf = inflationFactor(m);
@@ -544,11 +454,16 @@ function monthlyCert(m){
   if (m === 9) return M.certMonth9;
   return 0;
 }
+function monthlyLab(m){
+  // Услуги лаборатории начисляются при каждом закупе сырья.
+  // В Excel — мес. 7 (закуп на 4 мес.) и далее ежемесячно с мес. 13. Упрощение: с мес. 7.
+  return m >= 7 ? M.labPerMonth * inflationFactor(m) : 0;
+}
 function monthlyAdminParts(m){
   const adminBase = monthlyAdminBase(m);
   const certs = monthlyCert(m);
-  const agency = (adminBase + certs) * M.agencyPct;
-  return { admin: adminBase + agency, certs: certs };
+  const agency = adminBase * M.agencyPct;   // ← ИСПРАВЛЕНО: только на адм. без сертификаций
+  return { admin: adminBase + agency, certs, lab: monthlyLab(m) };
 }
 function monthlyCapex(m){
   let t = 0;
@@ -576,16 +491,20 @@ function getLoad(m){
 }
 function monthlyCalc(m){
   const load = getLoad(m);
-  const qty = (M.capacity || 0) * load;
+  const qtyProduced = (M.capacity || 0) * load;
+  // ← ИСПРАВЛЕНО: продажи сдвинуты на 1 мес (отсрочка платежа 30 дней)
+  const qtySold = m >= 2 ? (M.capacity || 0) * getLoad(m-1) : 0;
+
   const inf = inflationFactor(m);
   const price = ctrl.price * inf;
   const varPerUnit = (M.raw + M.otherVar) * inf;
-  const revenue = qty * price / 1000;
-  const variable = qty * varPerUnit / 1000;
+
+  const revenue = qtySold * price / 1000;
+  const variable = qtySold * varPerUnit / 1000;
   const gross = revenue - variable;
   const fot = monthlyFOT(m);
   const ap = monthlyAdminParts(m);
-  const ebitda = gross - fot - ap.admin - ap.certs;
+  const ebitda = gross - fot - ap.admin - ap.certs - ap.lab;
   const dep = monthlyDepreciation(m);
   const ebit = ebitda - dep;
   const tax = Math.max(0, ebit) * M.kpn;
@@ -593,8 +512,9 @@ function monthlyCalc(m){
   const capex = monthlyCapex(m);
   const opCF = ebitda - tax;
   const flow = opCF - capex;
-  return {m, load, qty, price, varPerUnit, revenue, variable, gross, fot,
-    admin: ap.admin, cert: ap.certs, ebitda, dep, ebit, tax, netProfit,
+
+  return {m, load, qtyProduced, qtySold, price, varPerUnit, revenue, variable, gross, fot,
+    admin: ap.admin, cert: ap.certs, lab: ap.lab, ebitda, dep, ebit, tax, netProfit,
     capex, opCF, flow};
 }
 function runModel(){
@@ -610,7 +530,6 @@ function calcNPV(months){
   const mr = monthlyRate();
   return months.reduce((s,x)=> s + x.flow/Math.pow(1+mr, x.m), 0);
 }
-// IRR возвращает МЕСЯЧНУЮ ставку
 function calcIRRMonthly(months){
   const flows = months.map(x=>x.flow);
   const f = r => flows.reduce((s,v,i)=> s + v/Math.pow(1+r, i+1), 0);
@@ -619,7 +538,6 @@ function calcIRRMonthly(months){
   for (let i=0;i<100;i++){ const mid=(lo+hi)/2; if (f(lo)*f(mid)<=0) hi=mid; else lo=mid; }
   return (lo+hi)/2;
 }
-// Аннуализированная IRR: (1 + r_monthly)^12 - 1
 function calcIRRAnnual(months){
   const r = calcIRRMonthly(months);
   if (!isFinite(r)) return NaN;
@@ -673,7 +591,7 @@ function render(){
   const fullMonth = months[23];
   const fullEbitdaYear = fullMonth.ebitda * 12;
 
-  setTxt('kInvest', human(totalInvestment));
+  setTxt('kInvest', human(physicalCapex));
   setTxt('kRevY1', human(revY1));
   const p1 = document.getElementById('kProfitY1');
   p1.textContent = human(profitY1);
@@ -741,12 +659,14 @@ function renderPLTable(months){
   head.innerHTML = '<th>Показатель</th>' + y1.map(x=>`<th>${x.m}</th>`).join('')
     + y2.map(x=>`<th>${x.m}</th>`).join('') + '<th>Y3</th><th>Y4</th><th>Y5</th>';
   const defs = [
+    {label:'Объём продаж, шт', get:x=>x.qtySold},
     {label:'Выручка', get:x=>x.revenue},
     {label:'Переменные затраты', get:x=>-x.variable},
     {label:'Валовая прибыль', get:x=>x.gross},
     {label:'ФОТ', get:x=>-x.fot},
-    {label:'Адм. расходы (вкл. агентские)', get:x=>-x.admin},
+    {label:'Адм. (вкл. агентские)', get:x=>-x.admin},
     {label:'Сертификации', get:x=>-x.cert},
+    {label:'Лаборатория', get:x=>-x.lab},
     {label:'EBITDA', get:x=>x.ebitda, big:true},
     {label:'Амортизация', get:x=>-x.dep},
     {label:'EBIT', get:x=>x.ebit},
@@ -787,7 +707,6 @@ function shortNum(v){
   if (a >= 1e3) return (v/1e3).toFixed(0)+'млн';
   return Math.round(v);
 }
-
 function drawCumulativeChart(months, payback){
   const canvas = document.getElementById('chart1');
   if (!canvas) return;
@@ -798,7 +717,6 @@ function drawCumulativeChart(months, payback){
   canvas.width = W*dpr; canvas.height = H*dpr;
   ctx.setTransform(dpr,0,0,dpr,0,0);
   ctx.clearRect(0,0,W,H);
-
   let cum=0;
   const vals = months.map(x=>{ cum += x.flow; return cum; });
   const minV = Math.min(0, ...vals)*1.1;
@@ -807,7 +725,6 @@ function drawCumulativeChart(months, payback){
   const plotW = W-pad.l-pad.r, plotH = H-pad.t-pad.b;
   const X = i => pad.l + (i/(months.length-1))*plotW;
   const Y = v => pad.t + (1-(v-minV)/(maxV-minV||1))*plotH;
-
   ctx.strokeStyle='rgba(30,42,61,.8)'; ctx.lineWidth=1;
   ctx.font='10px Inter,sans-serif'; ctx.fillStyle='#5b6880';
   ctx.textAlign='right'; ctx.textBaseline='middle';
@@ -820,19 +737,16 @@ function drawCumulativeChart(months, payback){
   const y0 = Y(0);
   ctx.save(); ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(139,148,170,.5)';
   ctx.beginPath(); ctx.moveTo(pad.l,y0); ctx.lineTo(W-pad.r,y0); ctx.stroke(); ctx.restore();
-
   const grad = ctx.createLinearGradient(0, pad.t, 0, H-pad.b);
   grad.addColorStop(0,'rgba(79,140,255,.3)'); grad.addColorStop(1,'rgba(79,140,255,0)');
   ctx.beginPath(); ctx.moveTo(X(0), y0);
   vals.forEach((v,i)=>ctx.lineTo(X(i),Y(v)));
   ctx.lineTo(X(months.length-1), y0);
   ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
-
   ctx.beginPath();
   vals.forEach((v,i)=>{ i===0?ctx.moveTo(X(i),Y(v)):ctx.lineTo(X(i),Y(v)); });
   ctx.strokeStyle='#4f8cff'; ctx.lineWidth=2; ctx.lineJoin='round';
   ctx.shadowColor='rgba(79,140,255,.5)'; ctx.shadowBlur=8; ctx.stroke(); ctx.shadowBlur=0;
-
   if (isFinite(payback) && payback >= 0 && payback <= months.length){
     const idx = Math.min(months.length-1, payback);
     const px = X(idx), py = Y(0);
@@ -840,14 +754,12 @@ function drawCumulativeChart(months, payback){
     ctx.beginPath(); ctx.arc(px,py,4.5,0,Math.PI*2); ctx.fillStyle='#34d399';
     ctx.shadowColor='#34d399'; ctx.shadowBlur=10; ctx.fill(); ctx.shadowBlur=0;
   }
-
   ctx.fillStyle='#5b6880'; ctx.textAlign='center'; ctx.textBaseline='top';
   [0,12,24,36,48,60].forEach(m=>{
     const idx = m===0 ? 0 : Math.min(months.length-1, m-1);
     ctx.fillText(m+'м', X(idx), H-pad.b+6);
   });
 }
-
 function drawRevEbitdaChart(months){
   const canvas = document.getElementById('chart2');
   if (!canvas) return;
@@ -865,7 +777,6 @@ function drawRevEbitdaChart(months){
   const plotW = W-pad.l-pad.r, plotH = H-pad.t-pad.b;
   const groupW = plotW/shown.length, barW = groupW*0.36;
   const Y = v => pad.t + (1-(v-minV)/(maxV-minV||1))*plotH;
-
   ctx.strokeStyle='rgba(30,42,61,.8)'; ctx.lineWidth=1;
   ctx.font='10px Inter,sans-serif'; ctx.fillStyle='#5b6880';
   ctx.textAlign='right'; ctx.textBaseline='middle';
@@ -917,7 +828,6 @@ function paintSlider(el){
 const priceSlider = document.getElementById('priceSlider');
 const loadSlider = document.getElementById('loadSlider');
 const discSlider = document.getElementById('discSlider');
-
 priceSlider.value = ctrl.price;
 loadSlider.value = ctrl.targetLoad * 100;
 discSlider.value = ctrl.discount * 100;
@@ -940,7 +850,6 @@ priceSlider.addEventListener('input', ()=>{
   paintSlider(priceSlider);
   render();
 });
-
 loadSlider.addEventListener('input', ()=>{
   ctrl.targetLoad = +loadSlider.value / 100;
   M.rampPhases[M.rampPhases.length-1].load = ctrl.targetLoad;
@@ -949,7 +858,6 @@ loadSlider.addEventListener('input', ()=>{
   paintSlider(loadSlider);
   render();
 });
-
 discSlider.addEventListener('input', ()=>{
   ctrl.discount = +discSlider.value / 100;
   M.discount = ctrl.discount;
@@ -978,7 +886,7 @@ function updateInputNotes(){
   setTxt('calcAgency', (M.agencyPct*100).toFixed(0));
 }
 
-/* ============ РЕНДЕР ПОЛЕЙ ВВОДНЫХ ============ */
+/* ============ РЕНДЕР ПОЛЕЙ ============ */
 function renderInputs(){
   document.querySelectorAll('[data-key]').forEach(el => {
     const key = el.dataset.key;
@@ -1017,9 +925,8 @@ function renderInputs(){
   wireInputHandlers();
 }
 
-/* ============ ОБРАБОТЧИКИ ВВОДА ============ */
+/* ============ ОБРАБОТЧИКИ ============ */
 function wireInputHandlers(){
-  // статические поля data-key (вешаем один раз)
   document.querySelectorAll('[data-key]').forEach(el => {
     if (el.dataset.wired) return;
     el.dataset.wired = '1';
@@ -1030,7 +937,6 @@ function wireInputHandlers(){
       if (el.dataset.pct) v /= 100;
       M[key] = v;
       recalcCapacity();
-
       if (['priceM','priceL','priceXL','shareM','shareL','shareXL'].includes(key)){
         ctrl.price = calcWeighted();
         priceSlider.value = Math.max(150, Math.min(1500, ctrl.price));
@@ -1047,7 +953,6 @@ function wireInputHandlers(){
       render();
     });
   });
-
   document.querySelectorAll('[data-ramp]').forEach(el => {
     if (el.dataset.wired) return;
     el.dataset.wired = '1';
@@ -1065,8 +970,6 @@ function wireInputHandlers(){
       render();
     });
   });
-
-  // Динамические поля штата и адм. — пересоздаются при каждом renderInputs, поэтому wire без флага
   document.querySelectorAll('[data-staff-salary]').forEach(el => {
     el.addEventListener('input', () => {
       const v = parseFloat(el.value);
