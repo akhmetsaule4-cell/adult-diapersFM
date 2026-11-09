@@ -587,6 +587,7 @@ function render(){
   setTxt('vLoad', (ctrl.targetLoad*100).toFixed(0) + '%');
   setTxt('vDisc', (ctrl.discount*100).toFixed(1).replace('.',',') + '%');
 
+  // ФИКСИРОВАННЫЕ ЗНАЧЕНИЯ ДЛЯ ОБЪЁМА И ТОЧКИ БЕЗУБЫТОЧНОСТИ
   const qtyAtLoad = M.capacity * ctrl.targetLoad;
   const bep = calcBEP();
   const bepPct = isFinite(bep) ? (bep / M.capacity * 100) : NaN;
