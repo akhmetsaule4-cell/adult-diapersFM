@@ -133,6 +133,10 @@
       <div class="slider-row">
         <div class="slider-head"><label>Целевая загрузка</label><span class="val" id="vLoad">80%</span></div>
         <input type="range" id="loadSlider" min="20" max="100" step="1">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+          <div class="inp-item readonly"><label>Объём при загрузке</label><input type="text" id="iQtyLoad" readonly></div>
+          <div class="inp-item readonly"><label>Точка безубыточности</label><input type="text" id="iBEP" readonly></div>
+        </div>
       </div>
       <div class="slider-row">
         <div class="slider-head"><label>Ставка дисконтирования</label><span class="val" id="vDisc">15,0%</span></div>
@@ -140,9 +144,9 @@
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
         <div class="inp-item readonly"><label>Мощность 1 смены</label><input type="text" id="iCapacity" readonly></div>
-        <div class="inp-item readonly"><label>Объём/мес</label><input type="text" id="iQty" readonly></div>
         <div class="inp-item readonly"><label>Переменные/шт</label><input type="text" id="iVar" readonly></div>
         <div class="inp-item readonly"><label>Маржа/шт</label><input type="text" id="iMargin" readonly></div>
+        <div class="inp-item readonly"><label>Маржинальность</label><input type="text" id="iMarginPct" readonly></div>
       </div>
     </div>
 
@@ -481,6 +485,16 @@ function runModel(){
   return arr;
 }
 
+function calcBEP(){
+  const m = 24;
+  const ap = monthlyAdminParts(m);
+  const fixed = monthlyFOT(m) + ap.admin + ap.certs + ap.lab;
+  const inf = inflationFactor(m);
+  const marginPerUnit = ctrl.price * inf - (M.raw + M.otherVar) * inf;
+  if (marginPerUnit <= 0) return Infinity;
+  return fixed * 1000 / marginPerUnit;
+}
+
 function monthlyRate(){ return Math.pow(1+ctrl.discount,1/12)-1; }
 function calcNPV(months){
   const mr = monthlyRate();
@@ -572,10 +586,21 @@ function render(){
   setTxt('vPrice', ctrl.price.toFixed(0) + ' ₸/шт');
   setTxt('vLoad', (ctrl.targetLoad*100).toFixed(0) + '%');
   setTxt('vDisc', (ctrl.discount*100).toFixed(1).replace('.',',') + '%');
+
+  const qtyAtLoad = M.capacity * ctrl.targetLoad;
+  const bep = calcBEP();
+  const bepPct = isFinite(bep) ? (bep / M.capacity * 100) : NaN;
+
+  setTxt('iQtyLoad', fmt(qtyAtLoad) + ' шт/мес');
+  setTxt('iBEP', isFinite(bep)
+    ? fmt(Math.ceil(bep)) + ' шт · ' + bepPct.toFixed(1).replace('.',',') + '%'
+    : 'не достижима');
+
   setTxt('iCapacity', fmt(M.capacity) + ' шт');
-  setTxt('iQty', fmt(M.capacity*ctrl.targetLoad) + ' шт');
   setTxt('iVar', fmt1(M.raw + M.otherVar) + ' ₸');
-  setTxt('iMargin', fmt1(ctrl.price - M.raw - M.otherVar) + ' ₸');
+  const margin = ctrl.price - M.raw - M.otherVar;
+  setTxt('iMargin', fmt1(margin) + ' ₸');
+  setTxt('iMarginPct', ctrl.price > 0 ? (margin / ctrl.price * 100).toFixed(1).replace('.',',') + '%' : '—');
 
   renderCapexTable(physicalCapex, totalInvestment);
   renderPLTable(months);
@@ -869,13 +894,11 @@ function wireInputHandlers(){
         ctrl.price = calcWeighted();
         priceSlider.value = Math.max(150, Math.min(1500, ctrl.price));
         paintSlider(priceSlider);
-        setTxt('vPrice', ctrl.price.toFixed(0) + ' ₸/шт');
       }
       if (key === 'discount'){
         ctrl.discount = v;
         discSlider.value = v * 100;
         paintSlider(discSlider);
-        setTxt('vDisc', (v*100).toFixed(1).replace('.',',') + '%');
       }
       render();
     });
@@ -892,7 +915,6 @@ function wireInputHandlers(){
         ctrl.targetLoad = v / 100;
         loadSlider.value = v;
         paintSlider(loadSlider);
-        setTxt('vLoad', v.toFixed(0) + '%');
       }
       render();
     });
