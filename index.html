@@ -16,12 +16,12 @@
   h1{font-size:clamp(22px,3vw,34px);line-height:1.15;margin:0 0 8px;font-weight:750;letter-spacing:-.5px;background:linear-gradient(100deg,#fff 20%,#7fb0ff 70%,#22d3ee 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
   .sez-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--green);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);padding:6px 12px;border-radius:8px;margin-top:10px}
   .sez-badge::before{content:'◆';font-size:10px}
-  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin:20px 0 18px}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:20px 0 18px}
   .kpi{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:14px;padding:14px 16px;transition:border-color .2s,transform .2s}
   .kpi:hover{border-color:#2c4468;transform:translateY(-2px)}
   .kpi::after{content:'';position:absolute;inset:0 auto auto 0;height:2px;width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.55}
   .kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600;margin-bottom:6px}
-  .kpi-value{font-size:20px;font-weight:750;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+  .kpi-value{font-size:18px;font-weight:750;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
   .kpi-value.green{color:var(--green)}.kpi-value.red{color:var(--red)}.kpi-value.amber{color:var(--amber)}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
   @media(max-width:1100px){.layout{grid-template-columns:1fr}}
@@ -109,6 +109,10 @@
   <div class="kpi"><div class="kpi-label">Инвестиции (капитал)</div><div class="kpi-value" id="kInvest">—</div></div>
   <div class="kpi"><div class="kpi-label">Выручка Y1</div><div class="kpi-value" id="kRevY1">—</div></div>
   <div class="kpi"><div class="kpi-label">Прибыль Y1</div><div class="kpi-value" id="kProfitY1">—</div></div>
+  <div class="kpi"><div class="kpi-label">Прибыль Y2</div><div class="kpi-value" id="kProfitY2">—</div></div>
+  <div class="kpi"><div class="kpi-label">Прибыль Y3</div><div class="kpi-value" id="kProfitY3">—</div></div>
+  <div class="kpi"><div class="kpi-label">Прибыль Y4</div><div class="kpi-value" id="kProfitY4">—</div></div>
+  <div class="kpi"><div class="kpi-label">Прибыль Y5</div><div class="kpi-value" id="kProfitY5">—</div></div>
   <div class="kpi"><div class="kpi-label">NPV (5 лет)</div><div class="kpi-value" id="kNPV">—</div></div>
   <div class="kpi"><div class="kpi-label">IRR (годовая)</div><div class="kpi-value" id="kIRR">—</div></div>
   <div class="kpi"><div class="kpi-label">Окупаемость</div><div class="kpi-value" id="kPayback">—</div></div>
@@ -302,6 +306,10 @@
     <div class="stat-row"><span>Выручка/мес при полн.</span><b id="sRevFull">—</b></div>
     <div class="stat-row"><span>EBITDA/год при полн.</span><b id="sEbitdaFull">—</b></div>
     <div class="stat-row"><span>Чистая прибыль Y1</span><b id="sProfitY1">—</b></div>
+    <div class="stat-row"><span>Чистая прибыль Y2</span><b id="sProfitY2">—</b></div>
+    <div class="stat-row"><span>Чистая прибыль Y3</span><b id="sProfitY3">—</b></div>
+    <div class="stat-row"><span>Чистая прибыль Y4</span><b id="sProfitY4">—</b></div>
+    <div class="stat-row"><span>Чистая прибыль Y5</span><b id="sProfitY5">—</b></div>
     <div class="stat-row"><span>NPV (5 лет)</span><b id="sNPV">—</b></div>
     <div class="stat-row"><span>IRR (годовая)</span><b id="sIRR">—</b></div>
     <div class="stat-row"><span>Дисконт. окупаемость</span><b id="sDPB">—</b></div>
@@ -450,10 +458,15 @@ function monthlyDepreciation(m){
   if (m >= 10) t += M.inventory * 0.15 / 12;
   return t;
 }
+
+// СВЯЗЬ ПОЛЗУНКА С РАСКАЧКОЙ
 function getLoad(m){
   const p = M.rampPhases.find(r => m >= r.from && m <= r.to);
-  return p ? p.load : 0;
+  const baseLoad = p ? p.load : 0;
+  // Масштабируем все этапы раскачки пропорционально ползунку (база 80%)
+  return baseLoad * (ctrl.targetLoad / 0.80);
 }
+
 function monthlyCalc(m){
   const load = getLoad(m);
   const qtyProduced = (M.capacity || 0) * load;
@@ -541,9 +554,20 @@ function paybackText(pb){
 function render(){
   const months = runModel();
   const y1 = months.filter(x=>x.m<=12);
+  const y2 = months.filter(x=>x.m>=13 && x.m<=24);
+  const y3 = months.filter(x=>x.m>=25 && x.m<=36);
+  const y4 = months.filter(x=>x.m>=37 && x.m<=48);
+  const y5 = months.filter(x=>x.m>=49 && x.m<=60);
+  
   const sumF = (arr,f) => arr.reduce((s,x)=>s+x[f],0);
+  
   const revY1 = sumF(y1,'revenue');
   const profitY1 = sumF(y1,'netProfit');
+  const profitY2 = sumF(y2,'netProfit');
+  const profitY3 = sumF(y3,'netProfit');
+  const profitY4 = sumF(y4,'netProfit');
+  const profitY5 = sumF(y5,'netProfit');
+  
   const npv = calcNPV(months);
   const irrAnnual = calcIRRAnnual(months);
   const pb = calcPayback(months);
@@ -558,11 +582,21 @@ function render(){
   const fullMonth = months[23];
   const fullEbitdaYear = fullMonth.ebitda * 12;
 
+  // ВЕРХНИЕ КАРТОЧКИ
   setTxt('kInvest', human(physicalCapex));
   setTxt('kRevY1', human(revY1));
-  const p1 = document.getElementById('kProfitY1');
-  p1.textContent = human(profitY1);
-  p1.className = 'kpi-value ' + (profitY1 > 0 ? 'green' : 'red');
+  
+  const setProfitKPI = (id, val) => {
+    const el = document.getElementById(id);
+    el.textContent = human(val);
+    el.className = 'kpi-value ' + (val > 0 ? 'green' : 'red');
+  };
+  setProfitKPI('kProfitY1', profitY1);
+  setProfitKPI('kProfitY2', profitY2);
+  setProfitKPI('kProfitY3', profitY3);
+  setProfitKPI('kProfitY4', profitY4);
+  setProfitKPI('kProfitY5', profitY5);
+
   const npvEl = document.getElementById('kNPV');
   npvEl.textContent = human(npv);
   npvEl.className = 'kpi-value ' + (npv > 0 ? 'green' : 'red');
@@ -571,6 +605,7 @@ function render(){
   pbEl.textContent = paybackText(pb);
   pbEl.className = 'kpi-value ' + (isFinite(pb) ? 'green' : 'red');
 
+  // ПРАВАЯ КОЛОНКА
   setTxt('sInvestCap', human(physicalCapex));
   setTxt('sInvestWC', human(M.workingCapital));
   setTxt('sInvestTotal', human(totalInvestment));
@@ -579,15 +614,19 @@ function render(){
   setTxt('sRevFull', human(fullMonth.revenue));
   setTxt('sEbitdaFull', human(fullEbitdaYear));
   setTxt('sProfitY1', human(profitY1));
+  setTxt('sProfitY2', human(profitY2));
+  setTxt('sProfitY3', human(profitY3));
+  setTxt('sProfitY4', human(profitY4));
+  setTxt('sProfitY5', human(profitY5));
   setTxt('sNPV', human(npv));
   setTxt('sIRR', isFinite(irrAnnual) ? (irrAnnual*100).toFixed(1).replace('.',',')+'%' : '—');
   setTxt('sDPB', paybackText(dpb));
 
+  // ПОЛЗУНКИ И ВВОДНЫЕ
   setTxt('vPrice', ctrl.price.toFixed(0) + ' ₸/шт');
   setTxt('vLoad', (ctrl.targetLoad*100).toFixed(0) + '%');
   setTxt('vDisc', (ctrl.discount*100).toFixed(1).replace('.',',') + '%');
 
-  // ФИКСИРОВАННЫЕ ЗНАЧЕНИЯ ДЛЯ ОБЪЁМА И ТОЧКИ БЕЗУБЫТОЧНОСТИ
   const qtyAtLoad = M.capacity * ctrl.targetLoad;
   const bep = calcBEP();
   const bepPct = isFinite(bep) ? (bep / M.capacity * 100) : NaN;
@@ -827,8 +866,8 @@ priceSlider.addEventListener('input', ()=>{
 });
 loadSlider.addEventListener('input', ()=>{
   ctrl.targetLoad = +loadSlider.value / 100;
-  M.rampPhases[M.rampPhases.length-1].load = ctrl.targetLoad;
-  const lastRampEl = document.querySelector(`[data-ramp="${M.rampPhases.length-1}"]`);
+  M.rampPhases[4].load = ctrl.targetLoad; // Синхронизация с моделью
+  const lastRampEl = document.querySelector(`[data-ramp="4"]`);
   if (lastRampEl) lastRampEl.value = (ctrl.targetLoad*100).toFixed(0);
   paintSlider(loadSlider);
   render();
@@ -912,7 +951,7 @@ function wireInputHandlers(){
       let v = parseFloat(el.value);
       if (isNaN(v)) return;
       M.rampPhases[i].load = v / 100;
-      if (i === M.rampPhases.length - 1){
+      if (i === 4){
         ctrl.targetLoad = v / 100;
         loadSlider.value = v;
         paintSlider(loadSlider);
