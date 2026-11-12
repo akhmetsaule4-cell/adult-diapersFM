@@ -337,6 +337,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="stat-row"><span data-i18n="kpi_npv">NPV (5 лет)</span><b id="sNPV">—</b></div>
     <div class="stat-row"><span data-i18n="kpi_irr">IRR (годовая)</span><b id="sIRR">—</b></div>
     <div class="stat-row"><span data-i18n="kpi_dpb">Дисконт. окупаемость</span><b id="sDPB">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_pb_full">Окупаемость после выхода на мощность</span><b id="sPaybackFull">—</b></div>
   </div>
 </div>
 </div>
@@ -372,7 +373,9 @@ const i18n = {
     ch2_title: "Выручка и EBITDA", ch2_sub: "Первые 24 месяца, тыс. $", ch2_l1: "Выручка", ch2_l2: "EBITDA",
     key_indicators: "Ключевые показатели", kpi_wc: "Оборотный капитал", kpi_inv_total: "Инвестиции (всего)",
     kpi_peak_cf: "Пиковый отток CF", kpi_rev_full: "Выручка/мес при полн.", kpi_ebitda_full: "EBITDA/год при полн.", kpi_dpb: "Дисконт. окупаемость",
+    kpi_pb_full: "Окупаемость после выхода на мощность",
     unit_thou: "$", unit_mil: "тыс. $", unit_bil: "млн $", unit_pcs: "шт", unit_mo: "мес.", unit_yr: "г.", unit_no_pb: "не окупается", unit_less_mo: "меньше месяца",
+    after_20m: "(от 20 мес.)",
     pl_sales: "Объём продаж, шт", pl_rev: "Выручка", pl_var: "Переменные затраты", pl_gross: "Валовая прибыль", pl_fot: "ФОТ", pl_admin: "Адм. (вкл. агентские)", pl_cert: "Сертификации", pl_lab: "Лаборатория", pl_ebitda: "EBITDA", pl_dep: "Амортизация", pl_ebit: "EBIT", pl_tax: "КПН", pl_net: "Чистая прибыль",
     cf_op: "Операционный CF", cf_inv: "Инвестиции", cf_net: "Чистый CF", cf_cum: "Накопленный CF",
     cap_build: "Строительство (мес. 1–5)", cap_infra: "Инфраструктура", cap_adv: "Оборудование, аванс 30%", cap_fin: "Оборудование, остаток 70%", cap_cn: "Доставка из Китая", cap_svh: "Доставка СВХ → завод", cap_inv: "Инвентарь", cap_tot: "Итого капитальных вложений", cap_wc: "Оборотный капитал", cap_grand: "ИТОГО ИНВЕСТИЦИЙ",
@@ -410,7 +413,9 @@ const i18n = {
     ch2_title: "Revenue & EBITDA", ch2_sub: "First 24 months, K $", ch2_l1: "Revenue", ch2_l2: "EBITDA",
     key_indicators: "Key Indicators", kpi_wc: "Working Capital", kpi_inv_total: "Total Investments",
     kpi_peak_cf: "Peak CF Outflow", kpi_rev_full: "Revenue/mo (Full Load)", kpi_ebitda_full: "EBITDA/yr (Full Load)", kpi_dpb: "Discounted Payback",
+    kpi_pb_full: "Payback after full capacity",
     unit_thou: "$", unit_mil: "K $", unit_bil: "M $", unit_pcs: "pcs", unit_mo: "mo.", unit_yr: "yr.", unit_no_pb: "No payback", unit_less_mo: "< 1 mo",
+    after_20m: "(from mo. 20)",
     pl_sales: "Sales Volume, pcs", pl_rev: "Revenue", pl_var: "Variable Costs", pl_gross: "Gross Profit", pl_fot: "Payroll", pl_admin: "Admin Expenses (incl. agency)", pl_cert: "Certifications", pl_lab: "Laboratory", pl_ebitda: "EBITDA", pl_dep: "Depreciation", pl_ebit: "EBIT", pl_tax: "CIT", pl_net: "Net Profit",
     cf_op: "Operating CF", cf_inv: "Investments", cf_net: "Net CF", cf_cum: "Cumulative CF",
     cap_build: "Construction (Mo. 1–5)", cap_infra: "Infrastructure", cap_adv: "Equipment, 30% Advance", cap_fin: "Equipment, 70% Final", cap_cn: "Delivery from China", cap_svh: "Delivery to Plant", cap_inv: "Inventory", cap_tot: "Total CapEx", cap_wc: "Working Capital", cap_grand: "TOTAL INVESTMENTS",
@@ -448,7 +453,9 @@ const i18n = {
     ch2_title: "营收与EBITDA", ch2_sub: "前24个月，千$", ch2_l1: "营收", ch2_l2: "EBITDA",
     key_indicators: "关键指标", kpi_wc: "营运资金", kpi_inv_total: "总投资额",
     kpi_peak_cf: "最大现金流缺口", kpi_rev_full: "满产月营收", kpi_ebitda_full: "满产年EBITDA", kpi_dpb: "动态投资回收期",
+    kpi_pb_full: "满产后的回本期",
     unit_thou: "$", unit_mil: "千$", unit_bil: "百万$", unit_pcs: "片", unit_mo: "个月", unit_yr: "年", unit_no_pb: "无法回本", unit_less_mo: "少于1个月",
+    after_20m: "(从第20月起)",
     pl_sales: "销售量, 片", pl_rev: "营收", pl_var: "变动成本", pl_gross: "毛利润", pl_fot: "工资", pl_admin: "行政费用 (含代理费)", pl_cert: "认证费用", pl_lab: "实验室费用", pl_ebitda: "EBITDA", pl_dep: "折旧", pl_ebit: "息税前利润", pl_tax: "企业所得税", pl_net: "净利润",
     cf_op: "经营现金流", cf_inv: "投资支出", cf_net: "净现金流", cf_cum: "累计现金流",
     cap_build: "建筑工程 (第1-5月)", cap_infra: "基础设施", cap_adv: "设备预付款 30%", cap_fin: "设备尾款 70%", cap_cn: "中国运费", cap_svh: "至工厂运费", cap_inv: "存货", cap_tot: "资本支出合计", cap_wc: "营运资金", cap_grand: "总投资合计",
@@ -731,6 +738,24 @@ function render(){
   const pb = calcPayback(months);
   const dpb = calcDiscountedPayback(months);
   
+  // === НОВЫЙ РАСЧЕТ ОКУПАЕМОСТИ ПОСЛЕ ВЫХОДА НА МОЩНОСТЬ ===
+  let cumM20 = 0;
+  for (let i = 0; i < 20; i++) cumM20 += months[i].flow;
+  let remInvest = cumM20 < 0 ? -cumM20 : 0;
+  let flowFull = months[23].flow;
+  let pbFullVal = 0;
+  let pbFullText = '';
+
+  if (remInvest === 0) {
+    pbFullText = t('unit_less_mo');
+  } else if (flowFull <= 0) {
+    pbFullText = t('unit_no_pb');
+  } else {
+    pbFullVal = remInvest / flowFull;
+    pbFullText = paybackText(pbFullVal) + ' ' + t('after_20m');
+  }
+  // ==========================================================
+
   const physicalCapex = M.construction + M.infra
     + M.equipmentUsd*M.kztUsd/1000 + M.deliveryChinaUsd*M.kztUsd/1000
     + M.deliverySvhKzt/1000 + M.inventory;
@@ -779,6 +804,7 @@ function render(){
   setTxt('sNPV', human(npv));
   setTxt('sIRR', isFinite(irrAnnual) ? (irrAnnual*100).toFixed(1).replace('.',',')+'%' : '—');
   setTxt('sDPB', paybackText(dpb));
+  setTxt('sPaybackFull', pbFullText);
 
   setTxt('vPrice', (ctrl.price / M.kztUsd).toFixed(2) + ' $/'+t('unit_pcs'));
   setTxt('vLoad', (ctrl.targetLoad*100).toFixed(0) + '%');
