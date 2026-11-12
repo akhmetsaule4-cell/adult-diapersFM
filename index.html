@@ -10,7 +10,14 @@
   html,body{margin:0;padding:0}
   body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:radial-gradient(1100px 600px at 15% -15%,#17253f 0%,transparent 62%),radial-gradient(900px 500px at 95% 0%,#10263a 0%,transparent 55%),var(--bg);color:var(--text);min-height:100vh;padding:24px 16px 60px;-webkit-font-smoothing:antialiased}
   .wrap{max-width:1400px;margin:0 auto}
-  header{margin-bottom:20px}
+  
+  header{margin-bottom:20px;position:relative;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
+  .header-left{flex:1 1 auto}
+  .lang-switcher{display:flex;gap:8px;background:rgba(255,255,255,0.03);padding:6px;border-radius:14px;border:1px solid var(--border)}
+  .lang-btn{background:transparent;border:none;color:var(--muted);font:inherit;font-size:15px;font-weight:700;padding:10px 16px;border-radius:10px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+  .lang-btn:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+  .lang-btn.active{color:#fff;background:linear-gradient(160deg,rgba(79,140,255,.3),rgba(34,211,238,.15));box-shadow:0 4px 15px -5px rgba(79,140,255,.5);border:1px solid rgba(79,140,255,.4)}
+  
   .badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--green);background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.3);padding:5px 11px;border-radius:99px;margin-bottom:12px}
   .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
   h1{font-size:clamp(22px,3vw,34px);line-height:1.15;margin:0 0 8px;font-weight:750;letter-spacing:-.5px;background:linear-gradient(100deg,#fff 20%,#7fb0ff 70%,#22d3ee 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -20,7 +27,7 @@
   .kpi{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:14px;padding:14px 16px;transition:border-color .2s,transform .2s}
   .kpi:hover{border-color:#2c4468;transform:translateY(-2px)}
   .kpi::after{content:'';position:absolute;inset:0 auto auto 0;height:2px;width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.55}
-  .kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .kpi-value{font-size:18px;font-weight:750;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
   .kpi-value.green{color:var(--green)}.kpi-value.red{color:var(--red)}.kpi-value.amber{color:var(--amber)}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
@@ -93,71 +100,76 @@
   .staff-fields input{width:64px;background:#0e1520;border:1px solid var(--border);border-radius:6px;padding:4px 6px;color:#fff;font:inherit;font-size:12px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;outline:none;transition:border-color .2s,background .2s}
   .staff-fields input:hover{border-color:#2c4468;background:rgba(79,140,255,.04)}
   .staff-fields input:focus{border-color:var(--accent2);background:rgba(34,211,238,.06)}
-  .staff-fields input::-webkit-outer-spin-button,.staff-fields input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-  .staff-fields input[type=number]{-moz-appearance:textfield}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <div class="badge"><span class="dot"></span>СЭЗ · Специальная экономическая зона</div>
-  <h1>Завод подгузников для взрослых</h1>
-  <div class="sez-badge">Проект реализуется на территории СЭЗ</div>
+  <div class="header-left">
+    <div class="badge"><span class="dot"></span><span data-i18n="sez_label">СЭЗ · Специальная экономическая зона</span></div>
+    <h1 data-i18n="title">Завод подгузников для взрослых</h1>
+    <div class="sez-badge" data-i18n="sez_badge">Проект реализуется на территории СЭЗ</div>
+  </div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('ru')">🇷🇺 RU</button>
+    <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+    <button class="lang-btn" onclick="setLang('zh')">🇨🇳 中文</button>
+  </div>
 </header>
 
 <section class="kpi-grid">
-  <div class="kpi"><div class="kpi-label">Инвестиции (капитал)</div><div class="kpi-value" id="kInvest">—</div></div>
-  <div class="kpi"><div class="kpi-label">Выручка Y1</div><div class="kpi-value" id="kRevY1">—</div></div>
-  <div class="kpi"><div class="kpi-label">Прибыль Y1</div><div class="kpi-value" id="kProfitY1">—</div></div>
-  <div class="kpi"><div class="kpi-label">Прибыль Y2</div><div class="kpi-value" id="kProfitY2">—</div></div>
-  <div class="kpi"><div class="kpi-label">Прибыль Y3</div><div class="kpi-value" id="kProfitY3">—</div></div>
-  <div class="kpi"><div class="kpi-label">Прибыль Y4</div><div class="kpi-value" id="kProfitY4">—</div></div>
-  <div class="kpi"><div class="kpi-label">Прибыль Y5</div><div class="kpi-value" id="kProfitY5">—</div></div>
-  <div class="kpi"><div class="kpi-label">NPV (5 лет)</div><div class="kpi-value" id="kNPV">—</div></div>
-  <div class="kpi"><div class="kpi-label">IRR (годовая)</div><div class="kpi-value" id="kIRR">—</div></div>
-  <div class="kpi"><div class="kpi-label">Окупаемость</div><div class="kpi-value" id="kPayback">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_capex">Инвестиции (капитал)</div><div class="kpi-value" id="kInvest">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_rev_y1">Выручка Y1</div><div class="kpi-value" id="kRevY1">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_prof_y1">Прибыль Y1</div><div class="kpi-value" id="kProfitY1">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_prof_y2">Прибыль Y2</div><div class="kpi-value" id="kProfitY2">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_prof_y3">Прибыль Y3</div><div class="kpi-value" id="kProfitY3">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_prof_y4">Прибыль Y4</div><div class="kpi-value" id="kProfitY4">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_prof_y5">Прибыль Y5</div><div class="kpi-value" id="kProfitY5">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_npv">NPV (5 лет)</div><div class="kpi-value" id="kNPV">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_irr">IRR (годовая)</div><div class="kpi-value" id="kIRR">—</div></div>
+  <div class="kpi"><div class="kpi-label" data-i18n="kpi_payback">Окупаемость</div><div class="kpi-value" id="kPayback">—</div></div>
 </section>
 
 <div class="layout">
 <div class="left-col">
   <div class="card">
     <div class="tabs">
-      <button class="tab active" data-tab="drivers">Драйверы</button>
-      <button class="tab" data-tab="capex">Инвестиции</button>
-      <button class="tab" data-tab="pl">P&L</button>
-      <button class="tab" data-tab="cf">Cash Flow</button>
-      <button class="tab" data-tab="inputs">Вводные</button>
+      <button class="tab active" data-tab="drivers" data-i18n="tab_drivers">Драйверы</button>
+      <button class="tab" data-tab="capex" data-i18n="tab_capex">Инвестиции</button>
+      <button class="tab" data-tab="pl" data-i18n="tab_pl">P&L</button>
+      <button class="tab" data-tab="cf" data-i18n="tab_cf">Cash Flow</button>
+      <button class="tab" data-tab="inputs" data-i18n="tab_inputs">Вводные</button>
     </div>
 
     <div class="panel active" data-panel="drivers">
       <div class="slider-row">
-        <div class="slider-head"><label>Цена реализации</label><span class="val" id="vPrice">287 ₸/шт</span></div>
+        <div class="slider-head"><label data-i18n="drv_price">Цена реализации</label><span class="val" id="vPrice">287 ₸/шт</span></div>
         <input type="range" id="priceSlider" min="150" max="1500" step="1">
       </div>
       <div class="slider-row">
-        <div class="slider-head"><label>Целевая загрузка</label><span class="val" id="vLoad">80%</span></div>
+        <div class="slider-head"><label data-i18n="drv_load">Целевая загрузка</label><span class="val" id="vLoad">80%</span></div>
         <input type="range" id="loadSlider" min="20" max="100" step="1">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
-          <div class="inp-item readonly"><label>Объём при загрузке</label><input type="text" id="iQtyLoad" readonly></div>
-          <div class="inp-item readonly"><label>Точка безубыточности</label><input type="text" id="iBEP" readonly></div>
+          <div class="inp-item readonly"><label data-i18n="drv_qty_load">Объём при загрузке</label><input type="text" id="iQtyLoad" readonly></div>
+          <div class="inp-item readonly"><label data-i18n="drv_bep">Точка безубыточности</label><input type="text" id="iBEP" readonly></div>
         </div>
       </div>
       <div class="slider-row">
-        <div class="slider-head"><label>Ставка дисконтирования</label><span class="val" id="vDisc">15,0%</span></div>
+        <div class="slider-head"><label data-i18n="drv_disc">Ставка дисконтирования</label><span class="val" id="vDisc">15,0%</span></div>
         <input type="range" id="discSlider" min="5" max="30" step="0.5">
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
-        <div class="inp-item readonly"><label>Мощность 1 смены</label><input type="text" id="iCapacity" readonly></div>
-        <div class="inp-item readonly"><label>Переменные/шт</label><input type="text" id="iVar" readonly></div>
-        <div class="inp-item readonly"><label>Маржа/шт</label><input type="text" id="iMargin" readonly></div>
-        <div class="inp-item readonly"><label>Маржинальность</label><input type="text" id="iMarginPct" readonly></div>
+        <div class="inp-item readonly"><label data-i18n="drv_cap">Мощность 1 смены</label><input type="text" id="iCapacity" readonly></div>
+        <div class="inp-item readonly"><label data-i18n="drv_var">Переменные/шт</label><input type="text" id="iVar" readonly></div>
+        <div class="inp-item readonly"><label data-i18n="drv_margin">Маржа/шт</label><input type="text" id="iMargin" readonly></div>
+        <div class="inp-item readonly"><label data-i18n="drv_margin_pct">Маржинальность</label><input type="text" id="iMarginPct" readonly></div>
       </div>
     </div>
 
     <div class="panel" data-panel="capex">
       <div class="table-scroll">
         <table class="data">
-          <thead><tr><th>Статья</th><th>Сумма, тыс. ₸</th><th>Месяц</th></tr></thead>
+          <thead><tr><th data-i18n="th_item">Статья</th><th data-i18n="th_amount">Сумма, тыс. ₸</th><th data-i18n="th_month">Месяц</th></tr></thead>
           <tbody id="capexTable"></tbody>
         </table>
       </div>
@@ -165,117 +177,117 @@
 
     <div class="panel" data-panel="pl">
       <div class="table-scroll">
-        <table class="data" id="plTable"><thead><tr id="plHead"><th>Показатель</th></tr></thead><tbody id="plBody"></tbody></table>
+        <table class="data" id="plTable"><thead><tr id="plHead"><th data-i18n="th_indicator">Показатель</th></tr></thead><tbody id="plBody"></tbody></table>
       </div>
     </div>
 
     <div class="panel" data-panel="cf">
       <div class="table-scroll">
-        <table class="data" id="cfTable"><thead><tr id="cfHead"><th>Показатель</th></tr></thead><tbody id="cfBody"></tbody></table>
+        <table class="data" id="cfTable"><thead><tr id="cfHead"><th data-i18n="th_indicator">Показатель</th></tr></thead><tbody id="cfBody"></tbody></table>
       </div>
     </div>
 
     <div class="panel" data-panel="inputs">
       <div class="inp-toolbar">
-        <button class="btn-reset" id="btnReset">Сбросить всё</button>
+        <button class="btn-reset" id="btnReset" data-i18n="btn_reset">Сбросить всё</button>
       </div>
 
       <details class="inp-section" open>
-        <summary>А. Общие параметры</summary>
+        <summary data-i18n="sec_a">А. Общие параметры</summary>
         <div>
           <div class="inp-grid">
-            <div class="inp-item"><label>Курс USD, ₸</label><input type="number" step="1" data-key="kztUsd"></div>
-            <div class="inp-item"><label>Курс CNY, ₸</label><input type="number" step="0.1" data-key="kztCny"></div>
-            <div class="inp-item"><label>Инфляция, %/год</label><input type="number" step="0.5" data-key="inflation" data-pct="1"></div>
-            <div class="inp-item"><label>Дисконт, %/год</label><input type="number" step="0.5" data-key="discount" data-pct="1"></div>
-            <div class="inp-item"><label>КПН, %</label><input type="number" step="0.5" data-key="kpn" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_usd">Курс USD, ₸</label><input type="number" step="1" data-key="kztUsd"></div>
+            <div class="inp-item"><label data-i18n="in_cny">Курс CNY, ₸</label><input type="number" step="0.1" data-key="kztCny"></div>
+            <div class="inp-item"><label data-i18n="in_inf">Инфляция, %/год</label><input type="number" step="0.5" data-key="inflation" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_disc">Дисконт, %/год</label><input type="number" step="0.5" data-key="discount" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_kpn">КПН, %</label><input type="number" step="0.5" data-key="kpn" data-pct="1"></div>
           </div>
         </div>
       </details>
 
       <details class="inp-section">
-        <summary>Б. Производство</summary>
+        <summary data-i18n="sec_b">Б. Производство</summary>
         <div>
           <div class="inp-grid">
-            <div class="inp-item"><label>Скорость, шт/мин</label><input type="number" step="10" data-key="speed"></div>
-            <div class="inp-item"><label>Рабочих дней/мес</label><input type="number" step="1" data-key="workDays"></div>
-            <div class="inp-item"><label>Часов в смену</label><input type="number" step="0.5" data-key="shiftHours"></div>
-            <div class="inp-item"><label>КПД, %</label><input type="number" step="1" data-key="efficiency" data-pct="1"></div>
-            <div class="inp-item"><label>Брак, %</label><input type="number" step="0.5" data-key="waste" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_speed">Скорость, шт/мин</label><input type="number" step="10" data-key="speed"></div>
+            <div class="inp-item"><label data-i18n="in_days">Рабочих дней/мес</label><input type="number" step="1" data-key="workDays"></div>
+            <div class="inp-item"><label data-i18n="in_hours">Часов в смену</label><input type="number" step="0.5" data-key="shiftHours"></div>
+            <div class="inp-item"><label data-i18n="in_eff">КПД, %</label><input type="number" step="1" data-key="efficiency" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_waste">Брак, %</label><input type="number" step="0.5" data-key="waste" data-pct="1"></div>
           </div>
         </div>
       </details>
 
       <details class="inp-section">
-        <summary>В. Цены и ассортимент</summary>
+        <summary data-i18n="sec_c">В. Цены и ассортимент</summary>
         <div>
           <div class="inp-grid">
-            <div class="inp-item"><label>Цена M, ₸/шт</label><input type="number" step="1" data-key="priceM"></div>
-            <div class="inp-item"><label>Доля M, %</label><input type="number" step="1" data-key="shareM" data-pct="1"></div>
-            <div class="inp-item"><label>Цена L, ₸/шт</label><input type="number" step="1" data-key="priceL"></div>
-            <div class="inp-item"><label>Доля L, %</label><input type="number" step="1" data-key="shareL" data-pct="1"></div>
-            <div class="inp-item"><label>Цена XL, ₸/шт</label><input type="number" step="1" data-key="priceXL"></div>
-            <div class="inp-item"><label>Доля XL, %</label><input type="number" step="1" data-key="shareXL" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_pm">Цена M, ₸/шт</label><input type="number" step="1" data-key="priceM"></div>
+            <div class="inp-item"><label data-i18n="in_sm">Доля M, %</label><input type="number" step="1" data-key="shareM" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_pl">Цена L, ₸/шт</label><input type="number" step="1" data-key="priceL"></div>
+            <div class="inp-item"><label data-i18n="in_sl">Доля L, %</label><input type="number" step="1" data-key="shareL" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_pxl">Цена XL, ₸/шт</label><input type="number" step="1" data-key="priceXL"></div>
+            <div class="inp-item"><label data-i18n="in_sxl">Доля XL, %</label><input type="number" step="1" data-key="shareXL" data-pct="1"></div>
           </div>
         </div>
       </details>
 
       <details class="inp-section">
-        <summary>Г. Переменные затраты</summary>
+        <summary data-i18n="sec_d">Г. Переменные затраты</summary>
         <div>
           <div class="inp-grid">
-            <div class="inp-item"><label>Сырьё, ₸/шт</label><input type="number" step="0.01" data-key="raw"></div>
-            <div class="inp-item"><label>Прочие, ₸/шт</label><input type="number" step="0.01" data-key="otherVar"></div>
-            <div class="inp-item"><label>Лаборатория, тыс.₸/мес</label><input type="number" step="0.1" data-key="labPerMonth"></div>
+            <div class="inp-item"><label data-i18n="in_raw">Сырьё, ₸/шт</label><input type="number" step="0.01" data-key="raw"></div>
+            <div class="inp-item"><label data-i18n="in_other">Прочие, ₸/шт</label><input type="number" step="0.01" data-key="otherVar"></div>
+            <div class="inp-item"><label data-i18n="in_lab">Лаборатория, тыс.₸/мес</label><input type="number" step="0.1" data-key="labPerMonth"></div>
           </div>
         </div>
       </details>
 
       <details class="inp-section">
-        <summary>Д. Раскачка загрузки, %</summary>
+        <summary data-i18n="sec_e">Д. Раскачка загрузки, %</summary>
         <div>
           <div class="inp-grid">
-            <div class="inp-item"><label>Мес. 1–8</label><input type="number" step="1" data-ramp="0" data-pct="1"></div>
-            <div class="inp-item"><label>Мес. 9–11</label><input type="number" step="1" data-ramp="1" data-pct="1"></div>
-            <div class="inp-item"><label>Мес. 12–14</label><input type="number" step="1" data-ramp="2" data-pct="1"></div>
-            <div class="inp-item"><label>Мес. 15–20</label><input type="number" step="1" data-ramp="3" data-pct="1"></div>
-            <div class="inp-item"><label>Мес. 21+</label><input type="number" step="1" data-ramp="4" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_r1">Мес. 1–8</label><input type="number" step="1" data-ramp="0" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_r2">Мес. 9–11</label><input type="number" step="1" data-ramp="1" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_r3">Мес. 12–14</label><input type="number" step="1" data-ramp="2" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_r4">Мес. 15–20</label><input type="number" step="1" data-ramp="3" data-pct="1"></div>
+            <div class="inp-item"><label data-i18n="in_r5">Мес. 21+</label><input type="number" step="1" data-ramp="4" data-pct="1"></div>
           </div>
         </div>
       </details>
 
       <details class="inp-section">
-        <summary>Е. Капитальные вложения, тыс. ₸</summary>
+        <summary data-i18n="sec_f">Е. Капитальные вложения, тыс. ₸</summary>
         <div>
           <div class="inp-grid">
-            <div class="inp-item"><label>Строительство</label><input type="number" step="1000" data-key="construction"></div>
-            <div class="inp-item"><label>Инфраструктура</label><input type="number" step="1000" data-key="infra"></div>
-            <div class="inp-item"><label>Оборудование, USD</label><input type="number" step="1000" data-key="equipmentUsd"></div>
-            <div class="inp-item"><label>Доставка Китай, USD</label><input type="number" step="1000" data-key="deliveryChinaUsd"></div>
-            <div class="inp-item"><label>Доставка СВХ, ₸</label><input type="number" step="10000" data-key="deliverySvhKzt"></div>
-            <div class="inp-item"><label>Инвентарь, тыс. ₸</label><input type="number" step="1000" data-key="inventory"></div>
-            <div class="inp-item"><label>Оборотный капитал, тыс. ₸</label><input type="number" step="1000" data-key="workingCapital"></div>
+            <div class="inp-item"><label data-i18n="in_build">Строительство</label><input type="number" step="1000" data-key="construction"></div>
+            <div class="inp-item"><label data-i18n="in_infra">Инфраструктура</label><input type="number" step="1000" data-key="infra"></div>
+            <div class="inp-item"><label data-i18n="in_equip">Оборудование, USD</label><input type="number" step="1000" data-key="equipmentUsd"></div>
+            <div class="inp-item"><label data-i18n="in_deliv_cn">Доставка Китай, USD</label><input type="number" step="1000" data-key="deliveryChinaUsd"></div>
+            <div class="inp-item"><label data-i18n="in_deliv_svh">Доставка СВХ, ₸</label><input type="number" step="10000" data-key="deliverySvhKzt"></div>
+            <div class="inp-item"><label data-i18n="in_inv">Инвентарь, тыс. ₸</label><input type="number" step="1000" data-key="inventory"></div>
+            <div class="inp-item"><label data-i18n="in_wc">Оборотный капитал, тыс. ₸</label><input type="number" step="1000" data-key="workingCapital"></div>
           </div>
         </div>
       </details>
 
       <details class="inp-section">
-        <summary>Ж. Штат (оклад, тыс. ₸/мес)</summary>
+        <summary data-i18n="sec_g">Ж. Штат (оклад, тыс. ₸/мес)</summary>
         <div id="staffList"></div>
       </details>
 
       <details class="inp-section">
-        <summary>З. Адм. расходы (тыс. ₸/мес)</summary>
+        <summary data-i18n="sec_h">З. Адм. расходы (тыс. ₸/мес)</summary>
         <div id="adminList"></div>
       </details>
 
       <details class="inp-section">
-        <summary>И. Сертификации (разово, тыс. ₸)</summary>
+        <summary data-i18n="sec_i">И. Сертификации (разово, тыс. ₸)</summary>
         <div>
           <div class="inp-grid">
-            <div class="inp-item"><label>Месяц 5 — гос. регистрация</label><input type="number" step="10" data-key="certMonth5"></div>
-            <div class="inp-item"><label>Месяц 8 — ИСО 13485</label><input type="number" step="100" data-key="certMonth8"></div>
-            <div class="inp-item"><label>Месяц 9 — регистрация + экспертизы</label><input type="number" step="100" data-key="certMonth9"></div>
+            <div class="inp-item"><label data-i18n="in_cert5">Месяц 5 — гос. регистрация</label><input type="number" step="10" data-key="certMonth5"></div>
+            <div class="inp-item"><label data-i18n="in_cert8">Месяц 8 — ИСО 13485</label><input type="number" step="100" data-key="certMonth8"></div>
+            <div class="inp-item"><label data-i18n="in_cert9">Месяц 9 — регистрация + экспертизы</label><input type="number" step="100" data-key="certMonth9"></div>
           </div>
         </div>
       </details>
@@ -285,50 +297,172 @@
 
 <div class="right-col">
   <div class="card">
-    <h3>Накопленный денежный поток</h3>
-    <p>60 месяцев</p>
+    <h3 data-i18n="ch1_title">Накопленный денежный поток</h3>
+    <p data-i18n="ch1_sub">60 месяцев</p>
     <canvas id="chart1"></canvas>
-    <div class="legend"><span><i style="background:#4f8cff"></i>Накопленный CF</span><span><i style="background:#34d399"></i>Окупаемость</span></div>
+    <div class="legend"><span><i style="background:#4f8cff"></i><span data-i18n="ch1_l1">Накопленный CF</span></span><span><i style="background:#34d399"></i><span data-i18n="ch1_l2">Окупаемость</span></span></div>
   </div>
   <div class="card">
-    <h3>Выручка и EBITDA</h3>
-    <p>Первые 24 месяца, тыс. ₸</p>
+    <h3 data-i18n="ch2_title">Выручка и EBITDA</h3>
+    <p data-i18n="ch2_sub">Первые 24 месяца, тыс. ₸</p>
     <canvas id="chart2"></canvas>
-    <div class="legend"><span><i style="background:#4f8cff"></i>Выручка</span><span><i style="background:#22d3ee"></i>EBITDA</span></div>
+    <div class="legend"><span><i style="background:#4f8cff"></i><span data-i18n="ch2_l1">Выручка</span></span><span><i style="background:#22d3ee"></i><span data-i18n="ch2_l2">EBITDA</span></span></div>
   </div>
   <div class="card">
-    <h3>Ключевые показатели</h3>
-    <div class="stat-row"><span>Капитал (CapEx)</span><b id="sInvestCap">—</b></div>
-    <div class="stat-row"><span>Оборотный капитал</span><b id="sInvestWC">—</b></div>
-    <div class="stat-row"><span>Инвестиции (всего)</span><b id="sInvestTotal">—</b></div>
-    <div class="stat-row"><span>Пиковый отток CF</span><b id="sPeakCF">—</b></div>
-    <div class="stat-row"><span>Выручка Y1</span><b id="sRevY1">—</b></div>
-    <div class="stat-row"><span>Выручка/мес при полн.</span><b id="sRevFull">—</b></div>
-    <div class="stat-row"><span>EBITDA/год при полн.</span><b id="sEbitdaFull">—</b></div>
-    <div class="stat-row"><span>Чистая прибыль Y1</span><b id="sProfitY1">—</b></div>
-    <div class="stat-row"><span>Чистая прибыль Y2</span><b id="sProfitY2">—</b></div>
-    <div class="stat-row"><span>Чистая прибыль Y3</span><b id="sProfitY3">—</b></div>
-    <div class="stat-row"><span>Чистая прибыль Y4</span><b id="sProfitY4">—</b></div>
-    <div class="stat-row"><span>Чистая прибыль Y5</span><b id="sProfitY5">—</b></div>
-    <div class="stat-row"><span>NPV (5 лет)</span><b id="sNPV">—</b></div>
-    <div class="stat-row"><span>IRR (годовая)</span><b id="sIRR">—</b></div>
-    <div class="stat-row"><span>Дисконт. окупаемость</span><b id="sDPB">—</b></div>
+    <h3 data-i18n="key_indicators">Ключевые показатели</h3>
+    <div class="stat-row"><span data-i18n="kpi_capex">Капитал (CapEx)</span><b id="sInvestCap">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_wc">Оборотный капитал</span><b id="sInvestWC">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_inv_total">Инвестиции (всего)</span><b id="sInvestTotal">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_peak_cf">Пиковый отток CF</span><b id="sPeakCF">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_rev_y1">Выручка Y1</span><b id="sRevY1">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_rev_full">Выручка/мес при полн.</span><b id="sRevFull">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_ebitda_full">EBITDA/год при полн.</span><b id="sEbitdaFull">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_prof_y1">Чистая прибыль Y1</span><b id="sProfitY1">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_prof_y2">Чистая прибыль Y2</span><b id="sProfitY2">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_prof_y3">Чистая прибыль Y3</span><b id="sProfitY3">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_prof_y4">Чистая прибыль Y4</span><b id="sProfitY4">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_prof_y5">Чистая прибыль Y5</span><b id="sProfitY5">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_npv">NPV (5 лет)</span><b id="sNPV">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_irr">IRR (годовая)</span><b id="sIRR">—</b></div>
+    <div class="stat-row"><span data-i18n="kpi_dpb">Дисконт. окупаемость</span><b id="sDPB">—</b></div>
   </div>
 </div>
 </div>
 </div>
 
 <script>
+const i18n = {
+  ru: {
+    sez_label: "СЭЗ · Специальная экономическая зона",
+    title: "Завод подгузников для взрослых",
+    sez_badge: "Проект реализуется на территории СЭЗ",
+    kpi_capex: "Инвестиции (капитал)", kpi_rev_y1: "Выручка Y1", kpi_prof_y1: "Прибыль Y1",
+    kpi_prof_y2: "Прибыль Y2", kpi_prof_y3: "Прибыль Y3", kpi_prof_y4: "Прибыль Y4", kpi_prof_y5: "Прибыль Y5",
+    kpi_npv: "NPV (5 лет)", kpi_irr: "IRR (годовая)", kpi_payback: "Окупаемость",
+    tab_drivers: "Драйверы", tab_capex: "Инвестиции", tab_pl: "P&L", tab_cf: "Cash Flow", tab_inputs: "Вводные",
+    drv_price: "Цена реализации", drv_load: "Целевая загрузка", drv_disc: "Ставка дисконтирования",
+    drv_qty_load: "Объём при загрузке", drv_bep: "Точка безубыточности",
+    drv_cap: "Мощность 1 смены", drv_var: "Переменные/шт", drv_margin: "Маржа/шт", drv_margin_pct: "Маржинальность",
+    th_item: "Статья", th_amount: "Сумма, тыс. ₸", th_month: "Месяц", th_indicator: "Показатель",
+    btn_reset: "Сбросить всё",
+    sec_a: "А. Общие параметры", sec_b: "Б. Производство", sec_c: "В. Цены и ассортимент",
+    sec_d: "Г. Переменные затраты", sec_e: "Д. Раскачка загрузки, %", sec_f: "Е. Капитальные вложения, тыс. ₸",
+    sec_g: "Ж. Штат (оклад, тыс. ₸/мес)", sec_h: "З. Адм. расходы (тыс. ₸/мес)", sec_i: "И. Сертификации (разово, тыс. ₸)",
+    in_usd: "Курс USD, ₸", in_cny: "Курс CNY, ₸", in_inf: "Инфляция, %/год", in_disc: "Дисконт, %/год", in_kpn: "КПН, %",
+    in_speed: "Скорость, шт/мин", in_days: "Рабочих дней/мес", in_hours: "Часов в смену", in_eff: "КПД, %", in_waste: "Брак, %",
+    in_pm: "Цена M, ₸/шт", in_sm: "Доля M, %", in_pl: "Цена L, ₸/шт", in_sl: "Доля L, %", in_pxl: "Цена XL, ₸/шт", in_sxl: "Доля XL, %",
+    in_raw: "Сырьё, ₸/шт", in_other: "Прочие, ₸/шт", in_lab: "Лаборатория, тыс.₸/мес",
+    in_r1: "Мес. 1–8", in_r2: "Мес. 9–11", in_r3: "Мес. 12–14", in_r4: "Мес. 15–20", in_r5: "Мес. 21+",
+    in_build: "Строительство", in_infra: "Инфраструктура", in_equip: "Оборудование, USD", in_deliv_cn: "Доставка Китай, USD",
+    in_deliv_svh: "Доставка СВХ, ₸", in_inv: "Инвентарь, тыс. ₸", in_wc: "Оборотный капитал, тыс. ₸",
+    in_cert5: "Месяц 5 — гос. регистрация", in_cert8: "Месяц 8 — ИСО 13485", in_cert9: "Месяц 9 — регистрация + экспертизы",
+    ch1_title: "Накопленный денежный поток", ch1_sub: "60 месяцев", ch1_l1: "Накопленный CF", ch1_l2: "Окупаемость",
+    ch2_title: "Выручка и EBITDA", ch2_sub: "Первые 24 месяца, тыс. ₸", ch2_l1: "Выручка", ch2_l2: "EBITDA",
+    key_indicators: "Ключевые показатели", kpi_wc: "Оборотный капитал", kpi_inv_total: "Инвестиции (всего)",
+    kpi_peak_cf: "Пиковый отток CF", kpi_rev_full: "Выручка/мес при полн.", kpi_ebitda_full: "EBITDA/год при полн.", kpi_dpb: "Дисконт. окупаемость",
+    unit_thou: "тыс. ₸", unit_mil: "млн ₸", unit_bil: "млрд ₸", unit_pcs: "шт", unit_mo: "мес.", unit_yr: "г.", unit_no_pb: "не окупается", unit_less_mo: "меньше месяца",
+    pl_sales: "Объём продаж, шт", pl_rev: "Выручка", pl_var: "Переменные затраты", pl_gross: "Валовая прибыль", pl_fot: "ФОТ", pl_admin: "Адм. (вкл. агентские)", pl_cert: "Сертификации", pl_lab: "Лаборатория", pl_ebitda: "EBITDA", pl_dep: "Амортизация", pl_ebit: "EBIT", pl_tax: "КПН", pl_net: "Чистая прибыль",
+    cf_op: "Операционный CF", cf_inv: "Инвестиции", cf_net: "Чистый CF", cf_cum: "Накопленный CF",
+    cap_build: "Строительство (мес. 1–5)", cap_infra: "Инфраструктура", cap_adv: "Оборудование, аванс 30%", cap_fin: "Оборудование, остаток 70%", cap_cn: "Доставка из Китая", cap_svh: "Доставка СВХ → завод", cap_inv: "Инвентарь", cap_tot: "Итого капитальных вложений", cap_wc: "Оборотный капитал", cap_grand: "ИТОГО ИНВЕСТИЦИЙ",
+    staff_sal: "оклад", staff_cnt: "×кол-во", staff_start: "с мес.", admin_amount: "тыс.₸/мес", admin_start: "с мес."
+  },
+  en: {
+    sez_label: "SEZ · Special Economic Zone",
+    title: "Adult Diaper Manufacturing Plant",
+    sez_badge: "Project is implemented in the SEZ territory",
+    kpi_capex: "CapEx", kpi_rev_y1: "Revenue Y1", kpi_prof_y1: "Profit Y1",
+    kpi_prof_y2: "Profit Y2", kpi_prof_y3: "Profit Y3", kpi_prof_y4: "Profit Y4", kpi_prof_y5: "Profit Y5",
+    kpi_npv: "NPV (5 years)", kpi_irr: "IRR (Annual)", kpi_payback: "Payback",
+    tab_drivers: "Drivers", tab_capex: "CapEx", tab_pl: "P&L", tab_cf: "Cash Flow", tab_inputs: "Inputs",
+    drv_price: "Selling Price", drv_load: "Target Load", drv_disc: "Discount Rate",
+    drv_qty_load: "Volume at Load", drv_bep: "Break-even Point",
+    drv_cap: "Capacity (1 shift)", drv_var: "Variable Cost/pc", drv_margin: "Margin/pc", drv_margin_pct: "Margin %",
+    th_item: "Item", th_amount: "Amount, K ₸", th_month: "Month", th_indicator: "Indicator",
+    btn_reset: "Reset All",
+    sec_a: "A. General Parameters", sec_b: "B. Production", sec_c: "C. Prices & Assortment",
+    sec_d: "D. Variable Costs", sec_e: "E. Ramp-up Load, %", sec_f: "F. Capital Expenditures, K ₸",
+    sec_g: "G. Staff (Salary, K ₸/mo)", sec_h: "H. Admin Expenses (K ₸/mo)", sec_i: "I. Certifications (One-time, K ₸)",
+    in_usd: "USD Rate, ₸", in_cny: "CNY Rate, ₸", in_inf: "Inflation, %/yr", in_disc: "Discount, %/yr", in_kpn: "CIT, %",
+    in_speed: "Speed, pcs/min", in_days: "Work Days/mo", in_hours: "Hours/shift", in_eff: "Efficiency, %", in_waste: "Defect Rate, %",
+    in_pm: "Price M, ₸/pc", in_sm: "Share M, %", in_pl: "Price L, ₸/pc", in_sl: "Share L, %", in_pxl: "Price XL, ₸/pc", in_sxl: "Share XL, %",
+    in_raw: "Raw Materials, ₸/pc", in_other: "Other, ₸/pc", in_lab: "Lab Services, K ₸/mo",
+    in_r1: "Mo. 1–8", in_r2: "Mo. 9–11", in_r3: "Mo. 12–14", in_r4: "Mo. 15–20", in_r5: "Mo. 21+",
+    in_build: "Construction", in_infra: "Infrastructure", in_equip: "Equipment, USD", in_deliv_cn: "Delivery from China, USD",
+    in_deliv_svh: "Delivery to Plant, ₸", in_inv: "Inventory, K ₸", in_wc: "Working Capital, K ₸",
+    in_cert5: "Month 5 — State Registration", in_cert8: "Month 8 — ISO 13485", in_cert9: "Month 9 — Registration & Expertise",
+    ch1_title: "Cumulative Cash Flow", ch1_sub: "60 months", ch1_l1: "Cumulative CF", ch1_l2: "Payback",
+    ch2_title: "Revenue & EBITDA", ch2_sub: "First 24 months, K ₸", ch2_l1: "Revenue", ch2_l2: "EBITDA",
+    key_indicators: "Key Indicators", kpi_wc: "Working Capital", kpi_inv_total: "Total Investments",
+    kpi_peak_cf: "Peak CF Outflow", kpi_rev_full: "Revenue/mo (Full Load)", kpi_ebitda_full: "EBITDA/yr (Full Load)", kpi_dpb: "Discounted Payback",
+    unit_thou: "K ₸", unit_mil: "M ₸", unit_bil: "B ₸", unit_pcs: "pcs", unit_mo: "mo.", unit_yr: "yr.", unit_no_pb: "No payback", unit_less_mo: "< 1 mo",
+    pl_sales: "Sales Volume, pcs", pl_rev: "Revenue", pl_var: "Variable Costs", pl_gross: "Gross Profit", pl_fot: "Payroll", pl_admin: "Admin Expenses (incl. agency)", pl_cert: "Certifications", pl_lab: "Laboratory", pl_ebitda: "EBITDA", pl_dep: "Depreciation", pl_ebit: "EBIT", pl_tax: "CIT", pl_net: "Net Profit",
+    cf_op: "Operating CF", cf_inv: "Investments", cf_net: "Net CF", cf_cum: "Cumulative CF",
+    cap_build: "Construction (Mo. 1–5)", cap_infra: "Infrastructure", cap_adv: "Equipment, 30% Advance", cap_fin: "Equipment, 70% Final", cap_cn: "Delivery from China", cap_svh: "Delivery to Plant", cap_inv: "Inventory", cap_tot: "Total CapEx", cap_wc: "Working Capital", cap_grand: "TOTAL INVESTMENTS",
+    staff_sal: "salary", staff_cnt: "×count", staff_start: "from mo.", admin_amount: "K ₸/mo", admin_start: "from mo."
+  },
+  zh: {
+    sez_label: "经济特区 (SEZ)",
+    title: "成人纸尿裤生产工厂",
+    sez_badge: "项目在经济特区实施",
+    kpi_capex: "资本支出 (CapEx)", kpi_rev_y1: "第1年营收", kpi_prof_y1: "第1年利润",
+    kpi_prof_y2: "第2年利润", kpi_prof_y3: "第3年利润", kpi_prof_y4: "第4年利润", kpi_prof_y5: "第5年利润",
+    kpi_npv: "净现值 (5年)", kpi_irr: "内部收益率 (年)", kpi_payback: "投资回收期",
+    tab_drivers: "参数驱动", tab_capex: "资本支出", tab_pl: "损益表", tab_cf: "现金流", tab_inputs: "输入数据",
+    drv_price: "销售价格", drv_load: "目标产能利用率", drv_disc: "折现率",
+    drv_qty_load: "产能利用率下产量", drv_bep: "盈亏平衡点",
+    drv_cap: "单班产能", drv_var: "单位变动成本", drv_margin: "单位边际贡献", drv_margin_pct: "边际贡献率",
+    th_item: "项目", th_amount: "金额 (千₸)", th_month: "月份", th_indicator: "指标",
+    btn_reset: "重置全部",
+    sec_a: "A. 通用参数", sec_b: "B. 生产", sec_c: "C. 价格与产品结构",
+    sec_d: "D. 变动成本", sec_e: "E. 产能爬坡率，%", sec_f: "F. 资本支出，千₸",
+    sec_g: "G. 员工工资 (千₸/月)", sec_h: "H. 行政费用 (千₸/月)", sec_i: "I. 认证费用 (一次性，千₸)",
+    in_usd: "美元汇率, ₸", in_cny: "人民币汇率, ₸", in_inf: "通胀率, %/年", in_disc: "折现率, %/年", in_kpn: "企业所得税, %",
+    in_speed: "速度, 片/分钟", in_days: "每月工作天数", in_hours: "每班小时数", in_eff: "效率, %", in_waste: "次品率, %",
+    in_pm: "M码价格, ₸/片", in_sm: "M码占比, %", in_pl: "L码价格, ₸/片", in_sl: "L码占比, %", in_pxl: "XL码价格, ₸/片", in_sxl: "XL码占比, %",
+    in_raw: "原材料, ₸/片", in_other: "其他, ₸/片", in_lab: "实验室费用, 千₸/月",
+    in_r1: "第1-8月", in_r2: "第9-11月", in_r3: "第12-14月", in_r4: "第15-20月", in_r5: "第21月+",
+    in_build: "建筑工程", in_infra: "基础设施", in_equip: "设备, 美元", in_deliv_cn: "中国运费, 美元",
+    in_deliv_svh: "至工厂运费, ₸", in_inv: "存货, 千₸", in_wc: "营运资金, 千₸",
+    in_cert5: "第5月 — 国家注册", in_cert8: "第8月 — ISO 13485", in_cert9: "第9月 — 注册与专家鉴定",
+    ch1_title: "累计现金流", ch1_sub: "60个月", ch1_l1: "累计现金流", ch1_l2: "投资回收",
+    ch2_title: "营收与EBITDA", ch2_sub: "前24个月，千₸", ch2_l1: "营收", ch2_l2: "EBITDA",
+    key_indicators: "关键指标", kpi_wc: "营运资金", kpi_inv_total: "总投资额",
+    kpi_peak_cf: "最大现金流缺口", kpi_rev_full: "满产月营收", kpi_ebitda_full: "满产年EBITDA", kpi_dpb: "动态投资回收期",
+    unit_thou: "千₸", unit_mil: "百万₸", unit_bil: "十亿₸", unit_pcs: "片", unit_mo: "个月", unit_yr: "年", unit_no_pb: "无法回本", unit_less_mo: "少于1个月",
+    pl_sales: "销售量, 片", pl_rev: "营收", pl_var: "变动成本", pl_gross: "毛利润", pl_fot: "工资", pl_admin: "行政费用 (含代理费)", pl_cert: "认证费用", pl_lab: "实验室费用", pl_ebitda: "EBITDA", pl_dep: "折旧", pl_ebit: "息税前利润", pl_tax: "企业所得税", pl_net: "净利润",
+    cf_op: "经营现金流", cf_inv: "投资支出", cf_net: "净现金流", cf_cum: "累计现金流",
+    cap_build: "建筑工程 (第1-5月)", cap_infra: "基础设施", cap_adv: "设备预付款 30%", cap_fin: "设备尾款 70%", cap_cn: "中国运费", cap_svh: "至工厂运费", cap_inv: "存货", cap_tot: "资本支出合计", cap_wc: "营运资金", cap_grand: "总投资合计",
+    staff_sal: "工资", staff_cnt: "×人数", staff_start: "起始月", admin_amount: "千₸/月", admin_start: "起始月"
+  }
+};
+
+let currentLang = 'ru';
+function t(key) { return i18n[currentLang][key] || key; }
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t(key)) el.textContent = t(key);
+  });
+  
+  render();
+}
+
 const nf = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0});
 const nf1 = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:1});
 const fmt = n => nf.format(Math.round(n));
 const fmt1 = n => nf1.format(n);
 const setTxt = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+
 function human(v){
   const a = Math.abs(v);
-  if (a >= 1e6) return fmt1(v/1e6) + ' млрд ₸';
-  if (a >= 1e3) return fmt1(v/1e3) + ' млн ₸';
-  return fmt(v) + ' тыс. ₸';
+  if (a >= 1e6) return fmt1(v/1e6) + ' ' + t('unit_bil');
+  if (a >= 1e3) return fmt1(v/1e3) + ' ' + t('unit_mil');
+  return fmt(v) + ' ' + t('unit_thou');
 }
 const k = v => fmt(v);
 
@@ -458,15 +592,11 @@ function monthlyDepreciation(m){
   if (m >= 10) t += M.inventory * 0.15 / 12;
   return t;
 }
-
-// СВЯЗЬ ПОЛЗУНКА С РАСКАЧКОЙ
 function getLoad(m){
   const p = M.rampPhases.find(r => m >= r.from && m <= r.to);
   const baseLoad = p ? p.load : 0;
-  // Масштабируем все этапы раскачки пропорционально ползунку (база 80%)
   return baseLoad * (ctrl.targetLoad / 0.80);
 }
-
 function monthlyCalc(m){
   const load = getLoad(m);
   const qtyProduced = (M.capacity || 0) * load;
@@ -543,12 +673,12 @@ function calcDiscountedPayback(months){
   return Infinity;
 }
 function paybackText(pb){
-  if (!isFinite(pb)) return 'не окупается';
-  if (pb < 1) return 'меньше месяца';
-  if (pb < 12) return Math.ceil(pb) + ' мес.';
+  if (!isFinite(pb)) return t('unit_no_pb');
+  if (pb < 1) return t('unit_less_mo');
+  if (pb < 12) return Math.ceil(pb) + ' ' + t('unit_mo');
   const y = Math.floor(pb/12), mo = Math.ceil(pb - y*12);
-  if (mo >= 12) return (y+1) + ' г.';
-  return y + ' г.' + (mo ? ' ' + mo + ' мес.' : '');
+  if (mo >= 12) return (y+1) + ' ' + t('unit_yr');
+  return y + ' ' + t('unit_yr') + (mo ? ' ' + mo + ' ' + t('unit_mo') : '');
 }
 
 function render(){
@@ -572,17 +702,18 @@ function render(){
   const irrAnnual = calcIRRAnnual(months);
   const pb = calcPayback(months);
   const dpb = calcDiscountedPayback(months);
+  
   const physicalCapex = M.construction + M.infra
     + M.equipmentUsd*M.kztUsd/1000 + M.deliveryChinaUsd*M.kztUsd/1000
     + M.deliverySvhKzt/1000 + M.inventory;
   const totalInvestment = physicalCapex + M.workingCapital;
+  
   let cum=0, minCum=0;
   for (const x of months){ cum += x.flow; if (cum<minCum) minCum=cum; }
   const peakCF = Math.abs(minCum);
   const fullMonth = months[23];
   const fullEbitdaYear = fullMonth.ebitda * 12;
 
-  // ВЕРХНИЕ КАРТОЧКИ
   setTxt('kInvest', human(physicalCapex));
   setTxt('kRevY1', human(revY1));
   
@@ -605,7 +736,6 @@ function render(){
   pbEl.textContent = paybackText(pb);
   pbEl.className = 'kpi-value ' + (isFinite(pb) ? 'green' : 'red');
 
-  // ПРАВАЯ КОЛОНКА
   setTxt('sInvestCap', human(physicalCapex));
   setTxt('sInvestWC', human(M.workingCapital));
   setTxt('sInvestTotal', human(totalInvestment));
@@ -622,8 +752,7 @@ function render(){
   setTxt('sIRR', isFinite(irrAnnual) ? (irrAnnual*100).toFixed(1).replace('.',',')+'%' : '—');
   setTxt('sDPB', paybackText(dpb));
 
-  // ПОЛЗУНКИ И ВВОДНЫЕ
-  setTxt('vPrice', ctrl.price.toFixed(0) + ' ₸/шт');
+  setTxt('vPrice', ctrl.price.toFixed(0) + ' ₸/'+t('unit_pcs'));
   setTxt('vLoad', (ctrl.targetLoad*100).toFixed(0) + '%');
   setTxt('vDisc', (ctrl.discount*100).toFixed(1).replace('.',',') + '%');
 
@@ -631,12 +760,12 @@ function render(){
   const bep = calcBEP();
   const bepPct = isFinite(bep) ? (bep / M.capacity * 100) : NaN;
 
-  setTxt('iQtyLoad', fmt(qtyAtLoad) + ' шт/мес');
+  setTxt('iQtyLoad', fmt(qtyAtLoad) + ' ' + t('unit_pcs'));
   setTxt('iBEP', isFinite(bep)
-    ? fmt(Math.ceil(bep)) + ' шт · ' + bepPct.toFixed(1).replace('.',',') + '%'
-    : 'не достижима');
+    ? fmt(Math.ceil(bep)) + ' ' + t('unit_pcs') + ' · ' + bepPct.toFixed(1).replace('.',',') + '%'
+    : '—');
 
-  setTxt('iCapacity', fmt(M.capacity) + ' шт');
+  setTxt('iCapacity', fmt(M.capacity) + ' ' + t('unit_pcs'));
   setTxt('iVar', fmt1(M.raw + M.otherVar) + ' ₸');
   const margin = ctrl.price - M.raw - M.otherVar;
   setTxt('iMargin', fmt1(margin) + ' ₸');
@@ -651,18 +780,18 @@ function render(){
 
 function renderCapexTable(physical, total){
   const rows = [
-    {name:'Строительство (мес. 1–5)', sum:M.construction, month:'1–5'},
-    {name:'Инфраструктура', sum:M.infra, month:'1'},
-    {name:'Оборудование, аванс 30%', sum:M.equipmentUsd*M.kztUsd/1000*M.equipAdvPct, month:'1'},
-    {name:'Оборудование, остаток 70%', sum:M.equipmentUsd*M.kztUsd/1000*M.equipFinalPct, month:'7'},
-    {name:'Доставка из Китая', sum:M.deliveryChinaUsd*M.kztUsd/1000, month:'8'},
-    {name:'Доставка СВХ → завод', sum:M.deliverySvhKzt/1000, month:'8'},
-    {name:'Инвентарь', sum:M.inventory, month:'5'},
+    {name: t('cap_build'), sum:M.construction, month:'1–5'},
+    {name: t('cap_infra'), sum:M.infra, month:'1'},
+    {name: t('cap_adv'), sum:M.equipmentUsd*M.kztUsd/1000*M.equipAdvPct, month:'1'},
+    {name: t('cap_fin'), sum:M.equipmentUsd*M.kztUsd/1000*M.equipFinalPct, month:'7'},
+    {name: t('cap_cn'), sum:M.deliveryChinaUsd*M.kztUsd/1000, month:'8'},
+    {name: t('cap_svh'), sum:M.deliverySvhKzt/1000, month:'8'},
+    {name: t('cap_inv'), sum:M.inventory, month:'5'},
   ];
   let html = rows.map(r=>`<tr><td>${r.name}</td><td>${k(r.sum)}</td><td>${r.month}</td></tr>`).join('');
-  html += `<tr class="total"><td>Итого капитальных вложений</td><td>${k(physical)}</td><td>—</td></tr>`;
-  html += `<tr><td>Оборотный капитал</td><td>${k(M.workingCapital)}</td><td>1–9</td></tr>`;
-  html += `<tr class="big"><td>ИТОГО ИНВЕСТИЦИЙ</td><td>${k(total)}</td><td>—</td></tr>`;
+  html += `<tr class="total"><td>${t('cap_tot')}</td><td>${k(physical)}</td><td>—</td></tr>`;
+  html += `<tr><td>${t('cap_wc')}</td><td>${k(M.workingCapital)}</td><td>1–9</td></tr>`;
+  html += `<tr class="big"><td>${t('cap_grand')}</td><td>${k(total)}</td><td>—</td></tr>`;
   document.getElementById('capexTable').innerHTML = html;
 }
 
@@ -673,22 +802,22 @@ function renderPLTable(months){
   const y4 = months.filter(x=>x.m>=37 && x.m<=48);
   const y5 = months.filter(x=>x.m>=49 && x.m<=60);
   const head = document.getElementById('plHead');
-  head.innerHTML = '<th>Показатель</th>' + y1.map(x=>`<th>${x.m}</th>`).join('')
+  head.innerHTML = `<th>${t('th_indicator')}</th>` + y1.map(x=>`<th>${x.m}</th>`).join('')
     + y2.map(x=>`<th>${x.m}</th>`).join('') + '<th>Y3</th><th>Y4</th><th>Y5</th>';
   const defs = [
-    {label:'Объём продаж, шт', get:x=>x.qtySold},
-    {label:'Выручка', get:x=>x.revenue},
-    {label:'Переменные затраты', get:x=>-x.variable},
-    {label:'Валовая прибыль', get:x=>x.gross},
-    {label:'ФОТ', get:x=>-x.fot},
-    {label:'Адм. (вкл. агентские)', get:x=>-x.admin},
-    {label:'Сертификации', get:x=>-x.cert},
-    {label:'Лаборатория', get:x=>-x.lab},
-    {label:'EBITDA', get:x=>x.ebitda, big:true},
-    {label:'Амортизация', get:x=>-x.dep},
-    {label:'EBIT', get:x=>x.ebit},
-    {label:'КПН', get:x=>-x.tax},
-    {label:'Чистая прибыль', get:x=>x.netProfit, big:true},
+    {label:t('pl_sales'), get:x=>x.qtySold},
+    {label:t('pl_rev'), get:x=>x.revenue},
+    {label:t('pl_var'), get:x=>-x.variable},
+    {label:t('pl_gross'), get:x=>x.gross},
+    {label:t('pl_fot'), get:x=>-x.fot},
+    {label:t('pl_admin'), get:x=>-x.admin},
+    {label:t('pl_cert'), get:x=>-x.cert},
+    {label:t('pl_lab'), get:x=>-x.lab},
+    {label:t('pl_ebitda'), get:x=>x.ebitda, big:true},
+    {label:t('pl_dep'), get:x=>-x.dep},
+    {label:t('pl_ebit'), get:x=>x.ebit},
+    {label:t('pl_tax'), get:x=>-x.tax},
+    {label:t('pl_net'), get:x=>x.netProfit, big:true},
   ];
   const years = [y3, y4, y5];
   const body = defs.map(d=>{
@@ -701,14 +830,14 @@ function renderPLTable(months){
 
 function renderCFTable(months){
   const shown = months.slice(0,24);
-  document.getElementById('cfHead').innerHTML = '<th>Показатель</th>' + shown.map(x=>`<th>${x.m}</th>`).join('');
+  document.getElementById('cfHead').innerHTML = `<th>${t('th_indicator')}</th>` + shown.map(x=>`<th>${x.m}</th>`).join('');
   let cum=0;
   const cums = shown.map(x => { cum += x.flow; return cum; });
   const rows = [
-    {label:'Операционный CF', values: shown.map(x=>x.opCF)},
-    {label:'Инвестиции', values: shown.map(x=>-x.capex)},
-    {label:'Чистый CF', values: shown.map(x=>x.flow), big:true},
-    {label:'Накопленный CF', values: cums, big:true},
+    {label:t('cf_op'), values: shown.map(x=>x.opCF)},
+    {label:t('cf_inv'), values: shown.map(x=>-x.capex)},
+    {label:t('cf_net'), values: shown.map(x=>x.flow), big:true},
+    {label:t('cf_cum'), values: cums, big:true},
   ];
   const body = rows.map(r=>{
     const cells = r.values.map(v=>`<td>${k(v)}</td>`).join('');
@@ -719,8 +848,8 @@ function renderCFTable(months){
 
 function shortNum(v){
   const a = Math.abs(v);
-  if (a >= 1e6) return (v/1e6).toFixed(1).replace('.',',')+'млрд';
-  if (a >= 1e3) return (v/1e3).toFixed(0)+'млн';
+  if (a >= 1e6) return (v/1e6).toFixed(1).replace('.',',')+'B';
+  if (a >= 1e3) return (v/1e3).toFixed(0)+'M';
   return Math.round(v);
 }
 function drawCumulativeChart(months, payback){
@@ -773,7 +902,7 @@ function drawCumulativeChart(months, payback){
   ctx.fillStyle='#5b6880'; ctx.textAlign='center'; ctx.textBaseline='top';
   [0,12,24,36,48,60].forEach(m=>{
     const idx = m===0 ? 0 : Math.min(months.length-1, m-1);
-    ctx.fillText(m+'м', X(idx), H-pad.b+6);
+    ctx.fillText(m+(currentLang==='en'?'m':currentLang==='zh'?'月':'м'), X(idx), H-pad.b+6);
   });
 }
 function drawRevEbitdaChart(months){
@@ -822,7 +951,7 @@ function drawRevEbitdaChart(months){
   ctx.fillStyle='#5b6880'; ctx.textAlign='center'; ctx.textBaseline='top';
   [1,6,12,18,24].forEach(m=>{
     const i=m-1;
-    if (i < shown.length) ctx.fillText(m+'м', pad.l + i*groupW + groupW/2, H-pad.b+6);
+    if (i < shown.length) ctx.fillText(m+(currentLang==='en'?'m':currentLang==='zh'?'月':'м'), pad.l + i*groupW + groupW/2, H-pad.b+6);
   });
 }
 
@@ -866,7 +995,7 @@ priceSlider.addEventListener('input', ()=>{
 });
 loadSlider.addEventListener('input', ()=>{
   ctrl.targetLoad = +loadSlider.value / 100;
-  M.rampPhases[4].load = ctrl.targetLoad; // Синхронизация с моделью
+  M.rampPhases[4].load = ctrl.targetLoad;
   const lastRampEl = document.querySelector(`[data-ramp="4"]`);
   if (lastRampEl) lastRampEl.value = (ctrl.targetLoad*100).toFixed(0);
   paintSlider(loadSlider);
@@ -896,11 +1025,11 @@ function renderInputs(){
     <div class="staff-row">
       <span class="staff-name">${s.name}</span>
       <div class="staff-fields">
-        <span class="lbl">оклад</span>
+        <span class="lbl">${t('staff_sal')}</span>
         <input type="number" step="10" data-staff-salary="${i}" value="${s.salary}">
-        <span class="lbl">×кол-во</span>
+        <span class="lbl">${t('staff_cnt')}</span>
         <input type="number" step="0.5" data-staff-count="${i}" value="${s.count}">
-        <span class="lbl">с мес.</span>
+        <span class="lbl">${t('staff_start')}</span>
         <input type="number" step="1" data-staff-start="${i}" value="${s.start}">
       </div>
     </div>
@@ -909,9 +1038,9 @@ function renderInputs(){
     <div class="staff-row">
       <span class="staff-name">${a.name}</span>
       <div class="staff-fields">
-        <span class="lbl">тыс.₸/мес</span>
+        <span class="lbl">${t('admin_amount')}</span>
         <input type="number" step="10" data-admin-amount="${i}" value="${a.amount}">
-        <span class="lbl">с мес.</span>
+        <span class="lbl">${t('admin_start')}</span>
         <input type="number" step="1" data-admin-start="${i}" value="${a.start}">
       </div>
     </div>
